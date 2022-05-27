@@ -7,7 +7,7 @@ int main()
     cin >> s >> r;
     j = 1;
     cout << endl;
-    stvorec
+//     stvorec
     for (int s = 1; s <= n; s++)
     {
         for (int r = 1; r <= p; r++)
@@ -16,7 +16,7 @@ int main()
         }
         cout << endl;
     }
-    trojuholnik
+//     trojuholnik
     for (int s = 1; s <= n; s++)
     {
         for (int r = 1; r <= j; r++)
