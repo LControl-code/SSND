@@ -1,14 +1,14 @@
 #include <iostream>
 #include <fstream>
-#include <vector>
+#define MAX 100
 using namespace std;
 
 int main()
 {
     ifstream pokladna("./fstream/items/pokladne/pokladne.txt");
-    float suma1 = 0.0, suma2 = 0.0, suma3 = 0.0, p  = 0, s = 0, pocet1 = 0, pocet2 = 0, pocet3 = 0;
-    vector<double> suma(3);
-    vector<int> pocet(3);
+    float suma1 = 0.0, suma2 = 0.0, suma3 = 0.0, p = 0, s = 0, pocet1 = 0, pocet2 = 0, pocet3 = 0;
+    double suma[MAX] = {};
+    int pocet[MAX] = {};
     while (pokladna >> p >> s)
     {  
             
@@ -20,6 +20,11 @@ int main()
             cout << "Pokladna " << p << " neexistuje";
         }
     }
+    fin.close();
+    
     for (int i = 0; i < pocet1; i++)
+        if (pocet[i])
+            cout << "Pokladna c. " << i << " - pocet nakupov: " << pocet[i] << ", suma: " << suma[i] << " EUR\n";
+    
     return 0;
 }
