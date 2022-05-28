@@ -2,7 +2,7 @@
 Repository for school projects
 
 Naming format:
-\[**SUBJECT**\].\[**PROGRAM_NAME**\].cpp
+\[**SUBJECT**\]_\[**PROGRAM_NAME**\].cpp
 
 This repository is dividied into 5 branches.
  1. Lectures
