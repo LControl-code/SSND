@@ -45,15 +45,15 @@ void KresliStvorec(int r, bool zmazat) {
         }
 }
 
-int main() {
-        int r = 0;
-        bool zmazat = false;
-        cin >> r;
-        while(r) {
+// int main() {
+//         int r = 0;
+//         bool zmazat = false;
+//         cin >> r;
+//         while(r) {
                 
-                KresliStvorec(r, true);
-                cout << endl << endl;
-                cin >> r;
-        }
-        return EXIT_SUCCESS;
-}
+//                 KresliStvorec(r, true);
+//                 cout << endl << endl;
+//                 cin >> r;
+//         }
+//         return EXIT_SUCCESS;
+// }
