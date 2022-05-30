@@ -13,5 +13,11 @@ int main() {
   cout << "GPA adress: " << &gpa << endl;
   cout << "Name adress: " << &name << endl;
 
+  // * pointer variable
+  // * to contain pointers
+  int *Page = &age;      // SHIFT + ALT + I (select the end of selected lines)
+  double *Pgpa = &gpa;   // SHIFT + ALT + I (select the end of selected lines)
+  string *Pname = &name; // SHIFT + ALT + I (select the end of selected lines)
+
   return 0;
 }
