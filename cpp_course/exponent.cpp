@@ -3,17 +3,17 @@
 using namespace std;
 
 long long power(long long baseNum, int powNum) {
-        int result = 1;
+  int result = 1;
 
-        for(int i = 0; i < powNum; i++){
-                result *= baseNum;
-        }
+  for (int i = 0; i < powNum; i++) {
+    result *= baseNum;
+  }
 
-        return result;
+  return result;
 }
 
-int main(){
+int main() {
 
-        cout << power(2, 16);
-        return 0;
+  cout << power(2, 16);
+  return 0;
 }

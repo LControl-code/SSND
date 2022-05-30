@@ -4,10 +4,10 @@
 // 	cin>>a>>b;
 // 	return a + b;
 // }
-// int main() { 
+// int main() {
 //     int a, b;
 //     addition(a,b);
-//     return 0;   
+//     return 0;
 
 // }
 #include <iostream>
@@ -33,9 +33,9 @@ using namespace std;
 //         if (s[i] <= min && int(s[i])>=65){
 //             min = s[i];
 //         }
-        
+
 //     }
-    
+
 //     for(int i = 0; i < s.length(); i++)
 //     {
 //         if (s[i] != min)
@@ -43,10 +43,8 @@ using namespace std;
 //     }
 // }
 // function that return the number of odd numbers
-int odd_count(long long n){
-// return n/2; // is also the number of even numbers
-return n/2; // is the number of odd numbers rounded down
+int odd_count(long long n) {
+  // return n/2; // is also the number of even numbers
+  return n / 2; // is the number of odd numbers rounded down
 }
-int main(){
-    odd_count(101285326932);
-}
+int main() { odd_count(101285326932); }

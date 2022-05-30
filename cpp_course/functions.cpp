@@ -7,24 +7,23 @@ string sayHi(string _name);
 
 int main(void) {
 
-        string name;
-        cin >> name;
-        string mood = sayHi(name);
+  string name;
+  cin >> name;
+  string mood = sayHi(name);
 
-        cout << "\n you are " << mood;
-        return EXIT_SUCCESS;
+  cout << "\n you are " << mood;
+  return EXIT_SUCCESS;
 }
 
 string sayHi(string _name) {
-        cout << "Hello " << _name << endl;
+  cout << "Hello " << _name << endl;
 
-        cout << "How are you?";
+  cout << "How are you?";
 
-        string mood;
-        cin >> mood;
+  string mood;
+  cin >> mood;
 
-        cout << "How are you?" << endl;
+  cout << "How are you?" << endl;
 
-        
-        return mood;
+  return mood;
 }
