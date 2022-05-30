@@ -23,5 +23,8 @@ string sayHi(string _name) {
         string mood;
         cin >> mood;
 
+        cout << "How are you?" << endl;
+
+        
         return mood;
 }
