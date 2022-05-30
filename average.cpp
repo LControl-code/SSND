@@ -4,7 +4,7 @@ using namespace std;
 int main() {
 
     double sum_num = 0, sum = 0;
-    int count = 0;
+    int count   = 0;
      
 
     while (cin >> sum_num) { // easy and effective way of getting the desired numbers
