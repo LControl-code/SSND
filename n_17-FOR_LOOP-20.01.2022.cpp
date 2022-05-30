@@ -3,29 +3,29 @@ using namespace std;
 
 int main()
 {
-    int s, j, p;
+    int s,r, j, p;
     cin >> s >> r;
     j = 1;
     cout << endl;
-//     stvorec
-    for (int s = 1; s <= n; s++)
-    {
-        for (int r = 1; r <= p; r++)
-        {
-            cout << "* ";
-        }
-        cout << endl;
-    }
-//     trojuholnik
-    for (int s = 1; s <= n; s++)
-    {
-        for (int r = 1; r <= j; r++)
-        {
-            cout << "* ";
-        }
-        cout << endl;
-        j--;
-    }
+// //     stvorec
+//     for (int s = 1; s <= n; s++)
+//     {
+//         for (int r = 1; r <= p; r++)
+//         {
+//             cout << "* ";
+//         }
+//         cout << endl;
+//     }
+// //     trojuholnik
+//     for (int s = 1; s <= n; s++)
+//     {
+//         for (int r = 1; r <= j; r++)
+//         {
+//             cout << "* ";
+//         }
+//         cout << endl;
+//         j--;
+//     }
     
             /*
             nepodarene obdlznik
@@ -61,7 +61,7 @@ int main()
 
         for (int r = 0; r <= p; r++)
         {
-            if (i == 0 || r == p ||)
+            if (i == 0 || r == p)
             {
                 cout << "* ";
             }

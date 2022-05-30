@@ -6,7 +6,8 @@ using namespace std;
 int main()
 {
     ifstream pokladna("./fstream/items/pokladne/pokladne.txt");
-    float suma1 = 0.0, suma2 = 0.0, suma3 = 0.0, p = 0, s = 0, pocet1 = 0, pocet2 = 0, pocet3 = 0;
+    float suma1 = 0.0, suma2 = 0.0, suma3 = 0.0, pocet1 = 0, pocet2 = 0, pocet3 = 0;
+    int p = 0, s = 0;
     double suma[MAX] = {};
     int pocet[MAX] = {};
     while (pokladna >> p >> s)
@@ -20,7 +21,7 @@ int main()
             cout << "Pokladna " << p << " neexistuje";
         }
     }
-    fin.close();
+    pokladna.close();
     
     for (int i = 0; i < pocet1; i++)
         if (pocet[i])
