@@ -247,8 +247,6 @@ string lowercase_name() {
   return low_name + '.' + low_surname;
 }
 
-// uppercase every character in string name and surname
-// all characters in name and surname are uppercase
 string uppercase_role() {
 
   string up_role = role;
@@ -257,4 +255,4 @@ string uppercase_role() {
   }
 
   return up_role;
-}
+} 
