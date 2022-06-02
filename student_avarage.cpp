@@ -2,8 +2,10 @@
 #include <vector>
 using namespace std;
 
-vector<vector<float>> sort_simple(vector<vector<float>> grade_not_sorted,
-                                  int r) {
+vector<vector<float>> sort_simple(vector<vector<float>> grade_not_sorted,int r) {
+  // r is the number of students
+  // grade_not_sorted is the unsorted grade vector
+  // sorting in ascending order
   for (int i = 1; i < r; i++) {
     // float current = grade_not_sorted[i][5];
     // insertion sort
@@ -51,8 +53,7 @@ int main() {
     cout << "Fourth Grading Period: ";
     cin >> grade[i][4];
 
-    grade[i].push_back((grade[i][1] + grade[i][2] + grade[i][3] + grade[i][4]) /
-                       4);
+    grade[i].push_back((grade[i][1] + grade[i][2] + grade[i][3] + grade[i][4]) / 4);
 
     cout << "=============================" << endl;
     cout << "Average of Student #" << i + 1 << ": " << grade[i][5] << endl;
