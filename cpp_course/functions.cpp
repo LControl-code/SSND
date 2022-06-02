@@ -12,7 +12,7 @@ int main(void) {
   string mood = sayHi(name);
 
   cout << "\n you are " << mood;
-  return EXIT_SUCCESS;
+  return EXIT_SUCCESS; // 
 }
 
 string sayHi(string _name) {

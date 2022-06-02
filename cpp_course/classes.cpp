@@ -10,7 +10,7 @@ using namespace std;
 class Book {
   public:
     Book(string title, string author, int pages, double price) {
-      this->title = title;
+      this->title = title; // could be without this-->
       this->author = author;
       this->pages = pages;
       this->price = price;

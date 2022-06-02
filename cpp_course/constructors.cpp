@@ -7,14 +7,14 @@ public: // public members of the class are accessible from outside the class
   Book(string title, string author, int pages, double price, int sold, int available) {
     // constructor of the class
     this->title = title; // (this-> is a pointer to the object of the class "Book")
-    this->author = author; // it
-    this->pages = pages;
+    this->author = author; // it is the same as this-->title = title;
+    this->pages = pages; // this-->pages points to the private variable and = pages is the parameter we got from constructor
     this->price = price;
     this->sold = sold;
     this->available = available;
   }
 
-  void print() { // method declaration (object function)
+  void print() { // method declaration (object function used to print objects atributtes)
     cout << "* " << title << endl;
     cout << "Title: " << title << endl;
     cout << "Author: " << author << endl;

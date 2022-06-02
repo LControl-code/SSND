@@ -10,7 +10,7 @@ int main() {
 
   for (int i = 0; i < 3; i++) {
     for (int j = 0; j < 2; j++) {
-      cout << numberGrid[i][j] << ' ';
+      cout << numberGrid[i][j] << ' '; // prints out all of the elements in the array
     }
   }
 

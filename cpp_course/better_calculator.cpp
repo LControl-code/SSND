@@ -15,7 +15,7 @@ int main() {
   cin >> num2;
 
   int result;
-  switch (op) {
+  switch (op) { // looks at the variable op and determines what to run, if none is found - default will be executed
   case '+':
     result = num1 + num2;
     break;
