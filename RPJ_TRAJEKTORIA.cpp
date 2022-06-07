@@ -212,20 +212,22 @@ int volny_pad(int mode) {
     cout << "\n ~ Za cas " << Volny_pad._t << " (s) z vysky " << Volny_pad._h
          << " (m) bude teleso vo vyske " << (Volny_pad._s > 0 ? Volny_pad._s : 0) << " m" << endl;
 
-    if (Volny_pad._s <= 0){
+    if (Volny_pad._s <= 0) {
       cout << "   ~ Teleso dopadlo na zem "; // (-2.5 sekundy)
 
       float i = 0.0;
-      Volny_pad._s = 0;
-      while(Volny_pad._s >= 0) { // vypis sekund do padnutia telesa na zem
-        Volny_pad._s = Volny_pad._h - 0.5 * Volny_pad._g * pow(i, 2);
-        if(Volny_pad._s <= 0){
-          cout <<"(" << i  << " sekundy, na h = 0)" << endl;
-        }
-        i += 0.01;
+      if (Volny_pad._s < -1) {
+        do { // vypis sekund do padnutia telesa na zem
+          Volny_pad._s = Volny_pad._h - 0.5 * Volny_pad._g * pow(i, 2);
+          if (Volny_pad._s <= 0) {
+            cout << "(" << i << " sekundy, na h = 0)";
+          }
+          i += 0.01;
+        } while (Volny_pad._s >= 0);
       }
+    cout << endl;
     }
-    
+
     Sleep_fix(2);
     break;
   }
