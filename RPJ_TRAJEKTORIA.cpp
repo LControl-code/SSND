@@ -213,7 +213,7 @@ int volny_pad(int mode) {
         i += 0.01;
       }
     }
-
+    
     sleep(2);
     break;
   }
