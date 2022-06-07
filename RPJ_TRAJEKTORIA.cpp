@@ -20,12 +20,13 @@ void after_challenge(int mode);
 class Vzorec {
 public:
   const float _g = 9.81; // m * s ^ -2
-  float _t = 0.;         // sekunda
-  float _v = 0.;         // m * s ^ -1
-  float _v0 = 0.;        // m * s ^ -1
-  float _a = 0.;         // uhol alpha ako des. cislo, nie stupne
-  float _h = 0.;         // meter
-  float _s = 0.;         // meter
+  float _t;              // sekunda
+  float _v;              // m * s ^ -1
+  float _v0;             // m * s ^ -1
+  float _a;              // uhol alpha ako des. cislo, nie stupne
+  float _h;              // meter
+  float _s;              // meter
+
 };
 
 int main() {
