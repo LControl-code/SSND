@@ -1,7 +1,13 @@
 #include <cmath>
 #include <iostream>
 #include <string>
-#include <unistd.h>
+
+#ifdef WINDOWS
+  #include <windows.h>
+#else
+  #include <unistd.h>
+#endif
+
 using namespace std;
 
 // Global variables
@@ -16,6 +22,7 @@ int vodorovny_vrh(int mode);
 int sikmy_vrh(int mode);
 void after_challenge(int mode);
 void clearScreen();
+void Sleep_fix(size_t time);
 
 
 // class declaration
@@ -153,10 +160,10 @@ int volny_pad(int mode) {
 
     Volny_pad._s = 0.5 * Volny_pad._g * Volny_pad._t; // vzorec
 
-    cout << "\n ~ Za cas " << Volny_pad._t << " prejde teleso do vzdialenosti "
+    cout << "\n ~ Za cas " << Volny_pad._t << " sekund prejde teleso volnym padom do vzdialenosti "
          << Volny_pad._s << " m" << endl;
 
-    sleep(2);
+    Sleep_fix(2);
     break;
   }
   case 2: {
@@ -174,7 +181,7 @@ int volny_pad(int mode) {
     cout << "\n ~ Za cas " << Volny_pad._t << " bude mat teleso rychlost "
          << Volny_pad._v << " m/s" << endl;
 
-    sleep(2);
+    Sleep_fix(2);
     break;
   }
 
@@ -214,7 +221,7 @@ int volny_pad(int mode) {
       }
     }
     
-    sleep(2);
+    Sleep_fix(2);
     break;
   }
   case 4: {
@@ -299,9 +306,17 @@ void clearScreen() {
     system("clear 2> /dev/null");
     cout << "\033[2J\033[1; 1H";
 #endif
-  
 }
 
+void Sleep_fix(size_t time) {
+  #ifdef WINDOWS
+    Sleep(time*1000)
+
+  #else
+    sleep(time);
+
+  #endif
+}
 /*
 unsigned long int g_vzorec(const int g, int t) {
         return 0.5 * g * (t*t);
