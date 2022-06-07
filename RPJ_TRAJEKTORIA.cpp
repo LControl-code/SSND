@@ -208,7 +208,7 @@ int volny_pad(int mode) {
       while(Volny_pad._s >= 0) { // vypis sekund do padnutia telesa na zem
         Volny_pad._s = Volny_pad._h - 0.5 * Volny_pad._g * pow(i, 2);
         if(Volny_pad._s <= 0){
-          cout <<"(" << i  << " sekundy - h = 0)" << endl;
+          cout <<"(" << i  << " sekundy, h = 0)" << endl;
         }
         i += 0.01;
       }
