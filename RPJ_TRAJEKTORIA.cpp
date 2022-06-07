@@ -1,4 +1,5 @@
 #include <cmath>
+#include <cstdlib>
 #include <iostream>
 #include <string>
 
@@ -12,6 +13,7 @@ using namespace std;
 
 // Global variables
 bool game_end = false;
+int exit_code;
 
 // Prototypes
 int mode_selection(int *_mode);
@@ -97,23 +99,26 @@ int main() {
     // Catching exceptions
     catch (const char *txtException) {
       game_end = true;
+      exit_code = 120;
       cout << "\nError: " << txtException << "!" << endl;
     }
 
     catch (const int numException) {
       game_end = true;
+      exit_code = numException;
       cout << "\nExit code: " << numException << endl;
     }
 
     catch (...) {
       game_end = true;
+      exit_code = 123;
       cout << "\nUndefined exception, quiting . . . " << endl;
     }
 
   } while (!game_end);
 
   cout << "\nExiting!" << endl;
-  return 0;
+  return exit_code;
 }
 
 int mode_selection(int *_mode) {
@@ -215,7 +220,7 @@ int volny_pad(int mode) {
       while(Volny_pad._s >= 0) { // vypis sekund do padnutia telesa na zem
         Volny_pad._s = Volny_pad._h - 0.5 * Volny_pad._g * pow(i, 2);
         if(Volny_pad._s <= 0){
-          cout <<"(" << i  << " sekundy, h = 0)" << endl;
+          cout <<"(" << i  << " sekundy, na h = 0)" << endl;
         }
         i += 0.01;
       }
@@ -300,7 +305,7 @@ void after_challenge(int mode) {
 
 void clearScreen() {
 #ifdef WINDOWS
-    system("cls");
+    system("cls"); // on windows
 
 #else
     system("clear 2> /dev/null");
@@ -317,29 +322,3 @@ void Sleep_fix(size_t time) {
 
   #endif
 }
-/*
-unsigned long int g_vzorec(const int g, int t) {
-        return 0.5 * g * (t*t);
-}
-
-long double v_za_cas_vodorovny_vrh(int v0, const int g,  int t) {
-        return sqrt(( (v0*v0) +  (g * t) * (g * t) ));
-}
-class Volny_pad {
-        public:
-        const float g = 9.81; // m*s-2
-        float h = 0; // m
-        float t = 0; // s
-        float s = 0; // m
-        float v = 0;  // m*s-1
-        double result;
-
-        double draha_za_cas(const float g, float t) {
-                return 0.5 * g * pow(t, 2.0);
-        }
-
-        double rychlost_za_cas(const float g, float t) {
-
-        }
-
-}; */
