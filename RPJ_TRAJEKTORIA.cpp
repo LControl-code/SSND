@@ -300,10 +300,22 @@ int vrh_nadol(int mode) {
          << endl;
     cout << "Input (cas v sekundach):  ";
     cin >> Vrh_nadol._t;
+
+    if (cin.fail())
+      throw "Invalid time";
+
     cout << "Input (pociatocna rychlost v m/s):  ";
     cin >> Vrh_nadol._v0;
 
+    if (cin.fail())
+      throw "Invalid starting speed";
+
     // TODO: hladame - Vrh_nadol._v;
+
+    Vrh_nadol._v = Vrh_nadol._v0 + Vrh_nadol._g * Vrh_nadol._t;
+    cout << "\n\t`````````````~Za cas << " << Vrh_nadol._t<< " bude mat teleso s pociatocnou rychlostou " << Vrh_nadol._v0 << " m/s, rychlost " << Vrh_nadol._v << "m/s.\n" << endl;
+    Sleep_fix(2);
+
     break;
   }
   case 3: {
@@ -391,4 +403,4 @@ void Sleep_fix(size_t time) {
     sleep(time);
 
   #endif
-}
+} // * done
