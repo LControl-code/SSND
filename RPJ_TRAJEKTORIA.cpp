@@ -119,16 +119,24 @@ int main() {
 
   cout << "\nExiting!" << endl;
   return exit_code;
-}
+} // for getting to different states of throws
 
 int mode_selection(int *_mode) {
 
   clearScreen();
 
-  cout << "\n\nVyberte si prostredie pocitania:\n\n    1. Volny pad\n    2. "
-          "Vrh nadol\n    3. Vrh nahor\n    4. Vodorovny vrh\n    5. Sikmy "
-          "vrh\n\n  0. Koniec\n"
-       << endl;
+  cout << R"(
+
+Vyberte si prostredie pocitania:
+
+    1. Volny pad
+    2. Vrh nadol
+    3. Vrh nahor
+    4. Vodorovny vrh
+    5. Sikmy vrh
+
+  0. Koniec
+)" << endl;
   cout << "Input (mode): ";
   cin >> *_mode;
 
@@ -137,7 +145,7 @@ int mode_selection(int *_mode) {
 
   return *_mode;
 
-} // mode selection, safe
+} // * mode selection, safe
 
 int volny_pad(int mode) {
   // s = 0.5 * g * pow(t,2);
@@ -145,10 +153,17 @@ int volny_pad(int mode) {
 
   Vzorec Volny_pad;
   clearScreen();
-  cout << "\n\n## Volny pad (1) ##\n\n    1. Vypocet vzdialenosti v case\n    "
-          "2. Vypocet rychlosti v case\n    3. Vypocet vysky s pociatocnou "
-          "vyskou\n    4. Domov\n\n0. Konec\n"
-       << endl;
+  cout << R"(
+
+## Volny pad (1) ##
+
+    1. Vypocet vzdialenosti v case
+    2. Vypocet rychlosti v case
+    3. Vypocet vysky s pociatocnou vyskou
+    4. Domov
+
+0. Konec
+)" << endl;
   cout << "Input (mode):  ";
   cin >> mode;
 
@@ -248,20 +263,69 @@ int volny_pad(int mode) {
   }
 
   return mode;
-}
+} // * done
 
 int vrh_nadol(int mode) {
   // s = v * t + 0.2 * g * pow(t,2);
   // v = v0 + g * t;
   Vzorec Vrh_nadol;
   clearScreen();
-  cout << "\n\n## Vrh nadol (2) ##\n\n    1. Vypocet vzdialenosti v case s "
-          "pociatocnou rychlostou\n    2. Vypocet rychlosti za cas s "
-          "pociatocnou rychlostou\n    4. Domov\n\n0. Konec\n"
-       << endl;
+  cout << R"(
+
+## Vrh nadol (2) ##
+
+    1. Vypocet vzdialenosti v case s pociatocnou rychlostou
+    2. Vypocet rychlosti za cas s pociatocnou rychlostou
+    3. Vypocet vysky s pociatocnou vyskou a rychlostou
+    4. Domov
+
+0. Konec
+)" << endl;
   cout << "Input (mode):  ";
   cin >> mode;
 
+  switch (mode) {
+  case 1: {
+    clearScreen();
+    break;
+  }
+  case 2: {
+    // v = v0 + g . t
+    clearScreen();
+    Vzorec Vrh_nadol;
+    cout << R"(
+
+## Vypocet rychlosti za cas s pociatocnou rychlostou ##
+    * Potrebne parametre: cas (t), pociatocna rychlost (v0)"
+         << endl;
+    cout << "Input (cas v sekundach):  ";
+    cin >> Vrh_nadol._t;
+    cout << "Input (pociatocna rychlost v m/s):  ";
+    cin >> Vrh_nadol._v0;
+
+    // TODO: hladame - Vrh_nadol._v;
+    break;
+  }
+  case 3: {
+    clearScreen();
+    break;
+  }
+  case 4: {
+
+    mode = 0;
+    break;
+  }
+  case 0: {
+
+    game_end = true;
+    break;
+  }
+  default: {
+
+    throw "Invalid argument";
+    break;
+  }
+  }
   return mode;
 }
 
@@ -289,7 +353,9 @@ int sikmy_vrh(int mode) {
 
 void after_challenge(int mode) {
   if (!game_end && mode) {
-    cout << "\nPrajete si pokracovat vo vypocte? (Y/n)" << endl;
+    cout << R"(
+Prajete si pokracovat vo vypocte? (Y/n))"
+         << endl;
 
     char choice = '\0';
 
@@ -311,7 +377,9 @@ void clearScreen() {
 
 #else
     system("clear 2> /dev/null");
-    cout << "\033[2J\033[1; 1H";
+    if(!system("echo $?")){
+      cout << "\033[2J\033[1; 1H";
+    }
 #endif
 }
 
