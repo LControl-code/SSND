@@ -287,6 +287,31 @@ int vrh_nadol(int mode) {
   switch (mode) {
   case 1: {
     clearScreen();
+    Vzorec Vrh_nadol;
+    cout << R"(
+
+## Vypocet rychlosti za cas s pociatocnou rychlostou ##
+    * Potrebne parametre: cas (t), pociatocna rychlost (v0))"
+         << endl;
+    
+    cout << "Input (cas v sekundach):  ";
+    cin >> Vrh_nadol._t;
+
+    if (cin.fail())
+      throw "Invalid time";
+
+    cout << "Input (pociatocna rychlost v m/s):  ";
+    cin >> Vrh_nadol._v0;
+
+    if (cin.fail())
+      throw "Invalid starting speed";
+
+    // ! d = v0 . t + 1/2 . g . t^2
+    Vrh_nadol._s = Vrh_nadol._v0 * Vrh_nadol._t + 0.5 * Vrh_nadol._g * pow(Vrh_nadol._t, 2);
+    cout << "\n   ~ Za cas " << Vrh_nadol._t
+         << " padne teleso s pociatocnou rychlostou " << Vrh_nadol._v0
+         << " m/s, do hlbky  " << Vrh_nadol._s << " m." << endl;
+    Sleep_fix(2);
     break;
   }
   case 2: {
@@ -296,7 +321,7 @@ int vrh_nadol(int mode) {
     cout << R"(
 
 ## Vypocet rychlosti za cas s pociatocnou rychlostou ##
-    * Potrebne parametre: cas (t), pociatocna rychlost (v0)"
+    * Potrebne parametre: cas (t), pociatocna rychlost (v0))"
          << endl;
     cout << "Input (cas v sekundach):  ";
     cin >> Vrh_nadol._t;
@@ -310,16 +335,17 @@ int vrh_nadol(int mode) {
     if (cin.fail())
       throw "Invalid starting speed";
 
-    // TODO: hladame - Vrh_nadol._v;
 
     Vrh_nadol._v = Vrh_nadol._v0 + Vrh_nadol._g * Vrh_nadol._t;
-    cout << "\n\t`````````````~Za cas << " << Vrh_nadol._t<< " bude mat teleso s pociatocnou rychlostou " << Vrh_nadol._v0 << " m/s, rychlost " << Vrh_nadol._v << "m/s.\n" << endl;
+    cout << "\n   ~ Za cas << " << Vrh_nadol._t<< " sekund bude mat teleso s pociatocnou rychlostou " << Vrh_nadol._v0 << " m/s, rychlost " << Vrh_nadol._v << " m/s." << endl;
     Sleep_fix(2);
 
     break;
   }
   case 3: {
     clearScreen();
+
+
     break;
   }
   case 4: {
@@ -339,7 +365,7 @@ int vrh_nadol(int mode) {
   }
   }
   return mode;
-}
+} // * done
 
 int vrh_nahor(int mode) {
   // s = v * t - 0.2 * g * pow(t,2);
