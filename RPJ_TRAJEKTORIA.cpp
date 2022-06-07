@@ -15,6 +15,8 @@ int vrh_nahor(int mode);
 int vodorovny_vrh(int mode);
 int sikmy_vrh(int mode);
 void after_challenge(int mode);
+void clearScreen();
+
 
 // class declaration
 class Vzorec {
@@ -109,7 +111,7 @@ int main() {
 
 int mode_selection(int *_mode) {
 
-  system("clear");
+  clearScreen();
 
   cout << "\n\nVyberte si prostredie pocitania:\n\n    1. Volny pad\n    2. "
           "Vrh nadol\n    3. Vrh nahor\n    4. Vodorovny vrh\n    5. Sikmy "
@@ -130,7 +132,7 @@ int volny_pad(int mode) {
   // v = g * t;
 
   Vzorec Volny_pad;
-  system("clear");
+  clearScreen();
   cout << "\n\n## Volny pad (1) ##\n\n    1. Vypocet vzdialenosti v case\n    "
           "2. Vypocet rychlosti v case\n    3. Vypocet vysky s pociatocnou "
           "vyskou\n    4. Domov\n\n0. Konec\n"
@@ -140,7 +142,7 @@ int volny_pad(int mode) {
 
   switch (mode) {
   case 1: {
-    system("clear");
+    clearScreen();
     cout << "\n\n## Vypocet vzdialenosti v case ##" << endl;
     cout << "   * Potrebne parametre: cas (t)" << endl;
     cout << "Input (cas v sekundach):  ";
@@ -158,7 +160,7 @@ int volny_pad(int mode) {
     break;
   }
   case 2: {
-    system("clear");
+    clearScreen();
     cout << "\n\n## Vypocet rychlosti v case ##" << endl;
     cout << "   * Potrebne parametre: cas (t)" << endl;
     cout << "Input (cas v sekundach):  ";
@@ -177,7 +179,7 @@ int volny_pad(int mode) {
   }
 
   case 3: {
-    system("clear");
+    clearScreen();
     cout << "\n\n## Vypocet vysky s pociatocnou vyskou ##" << endl;
     cout << "   * Potrebne parametre: pociatocna vyska (h), cas padu (t)"
          << endl;
@@ -195,13 +197,22 @@ int volny_pad(int mode) {
 
     Volny_pad._s = Volny_pad._h - 0.5 * Volny_pad._g * pow(Volny_pad._t, 2);
 
-    Volny_pad._s = (Volny_pad._s > 0 ? Volny_pad._s : 0);
-
     cout << "\n ~ Za cas " << Volny_pad._t << " (s) z vysky " << Volny_pad._h
-         << " (m) bude teleso vo vyske " << Volny_pad._s << " m" << endl;
+         << " (m) bude teleso vo vyske " << (Volny_pad._s > 0 ? Volny_pad._s : 0) << " m" << endl;
 
-    if (Volny_pad._s == 0)
-      cout << "   ~ Teleso dopadlo na zem" << endl;
+    if (Volny_pad._s <= 0){
+      cout << "   ~ Teleso dopadlo na zem "; // (-2.5 sekundy)
+
+      float i = 0.0;
+      Volny_pad._s = 0;
+      while(Volny_pad._s >= 0) { // vypis sekund do padnutia telesa na zem
+        Volny_pad._s = Volny_pad._h - 0.5 * Volny_pad._g * pow(i, 2);
+        if(Volny_pad._s <= 0){
+          cout <<"(" << i  << " sekundy - h = 0)" << endl;
+        }
+        i += 0.01;
+      }
+    }
 
     sleep(2);
     break;
@@ -229,7 +240,7 @@ int vrh_nadol(int mode) {
   // s = v * t + 0.2 * g * pow(t,2);
   // v = v0 + g * t;
   Vzorec Vrh_nadol;
-  system("clear");
+  clearScreen();
   cout << "\n\n## Vrh nadol (2) ##\n\n    1. Vypocet vzdialenosti v case s "
           "pociatocnou rychlostou\n    2. Vypocet rychlosti za cas s "
           "pociatocnou rychlostou\n    4. Domov\n\n0. Konec\n"
@@ -278,6 +289,17 @@ void after_challenge(int mode) {
     }
   }
   return;
+}
+
+void clearScreen() {
+#ifdef WINDOWS
+    system("cls");
+
+#else
+    system("clear 2> /dev/null");
+    cout << "\033[2J\033[1; 1H";
+#endif
+  
 }
 
 /*
