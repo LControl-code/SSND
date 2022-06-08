@@ -1,3 +1,4 @@
+// THIS PROGRAM IS DONE, could be refactored, but why lol
 #include <fstream>
 #include <iostream>
 #define MAX 100
