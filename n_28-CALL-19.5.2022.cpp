@@ -5,7 +5,7 @@ using namespace std;
 int main() {
 
   ifstream call("call.txt");
-  if (!call)
+  if (!call.is_open())
     return 1;
 
   long trvanie_hovoru[100] = {};
