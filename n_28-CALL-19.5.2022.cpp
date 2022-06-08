@@ -4,7 +4,7 @@ using namespace std;
 
 int main() {
 
-  ifstream call("./test-19.5.22/call.txt");
+  ifstream call("call.txt");
   if (!call)
     return 1;
 
@@ -29,7 +29,7 @@ int main() {
       max = trvanie_hovoru[i];
     }
     pocet_telefonatov[i]++;
-    if (pocet_telefonatov[i] > max) {
+    if (pocet_telefonatov[i] > max_pocet_tel) {
       max_pocet_tel = pocet_telefonatov[i];
     }
   }
@@ -61,8 +61,8 @@ int main() {
       }
       cout << "  " << telefonne_cislo[i];
 
-      cout << "Najviac telefonatov: ";
       if (pocet_telefonatov[i] == max_pocet_tel) {
+        cout << "\nNajviac telefonatov: ";
         cout << telefonne_cislo[i] << "  ";
       }
     }
