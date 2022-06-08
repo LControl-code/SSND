@@ -1,6 +1,6 @@
-#include <cstdlib>
+#include <cstdlib> // HEJ NEJEB SA MI TU
 #include <fstream>
-#include <ios>
+#include <ios> // WTF, to kto mi tu dal
 #include <iostream>
 #define MAX 100
 
