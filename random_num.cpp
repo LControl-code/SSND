@@ -10,7 +10,7 @@ int main() {
   cin >> min >> max;
   int i_rand_number;
   for(int i = 0; i < 50; i++) {
-    i_rand_number = min + rand() % (max - min + 1);
+    i_rand_number = min + rand() % (max - min + 1); // works, je to dobry vzorec, nie ako ten na hodine
     cout << i_rand_number << ' ';
   }
 
