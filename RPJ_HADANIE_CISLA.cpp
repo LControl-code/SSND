@@ -118,7 +118,7 @@ int main()
     // pretty dots >:DDD
     for(int dot_time = 1; dot_time <= 3; dot_time++) {
         cout << "•\n";
-        sleep(1.5);
+        sleep(1);
     }
     
     int option_pc_human = true;    
