@@ -5,7 +5,7 @@ using namespace std;
 
 int main() {
   ifstream fin;
-  fin.open("telefony.txt");
+  fin.open("TXT-telefony.txt");
   if (!fin.is_open())
     return EXIT_FAILURE;
 
