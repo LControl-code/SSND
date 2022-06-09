@@ -426,7 +426,6 @@ int vrh_nahor(int mode) {
   case 1: {
     // v = v0 - g . t
     clearScreen();
-    Vzorec Vrh_nahor;
     cout << R"(
 
 
@@ -451,7 +450,8 @@ int vrh_nahor(int mode) {
 
     cout << "\n   ~ Za cas " << Vrh_nahor._t
          << " vystupy teleso s pociatocnou rychlostou " << Vrh_nahor._v0
-         << " m/s, do vysky " << (Vrh_nahor._s > 0 ? Vrh_nahor._s : 0) << " m." << endl;
+         << " m/s, do vysky " << (Vrh_nahor._s > 0 ? Vrh_nahor._s : 0) << " m."
+         << endl;
 
     if (Vrh_nahor._s <= 0) {
       cout << "   ~ Teleso dopadlo na zem "; // (-2.5 sekundy)
@@ -469,6 +469,44 @@ int vrh_nahor(int mode) {
       cout << endl;
     }
     Sleep_fix(2);
+    break;
+  }
+  case 2: {
+    clearScreen();
+    cout << R"(
+
+## Vypocet rychlosti za cas s pociatocnou rychlostou ##
+    * Potrebne parametre: cas (t), pociatocna rychlost (v0))"
+         << endl;
+    cout << "Input (cas v sekundach):  ";
+    cin >> Vrh_nahor._t;
+
+    if (cin.fail())
+      throw "Invalid time";
+
+    cout << "Input (pociatocna rychlost v m/s):  ";
+    cin >> Vrh_nahor._v0;
+
+    if (cin.fail())
+      throw "Invalid starting speed";
+
+
+    Vrh_nahor._v = Vrh_nahor._v0 - Vrh_nahor._g * Vrh_nahor._t;
+    cout << "\n   ~ Za cas << " << Vrh_nahor._t<< " sekund bude mat teleso s pociatocnou rychlostou " << Vrh_nahor._v0 << " m/s, rychlost " << (Vrh_nahor._v > 0 ? Vrh_nahor._v : 0) << " m/s." << endl;
+    Sleep_fix(2);
+    break;
+
+  }
+  case 3: {
+    clearScreen();
+    Vzorec Vrh_nahor;
+  }
+  case 4: {
+    mode = 0;
+    break;
+  }
+  case 0: {
+    game_end = true;
     break;
   }
   }
