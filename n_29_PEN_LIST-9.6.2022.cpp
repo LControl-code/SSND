@@ -7,7 +7,7 @@
 int main() {
 
   std::fstream file_R("./TXT/TXT-zoznam.txt", std::ios::in);
-  if (!file_R.is_open()) {
+  if (!file_R.is_open()) { // ak sa subor nepodarilo otvorit
     return 1;
   }
 
@@ -20,12 +20,12 @@ int main() {
   // ucitelova metoda, lahsia
   std::string text;
   while (file_R >> name[pocet]) {
-    std::getline(file_R, text);
+    std::getline(file_R, text); 
     int i = 0;
-    while (name[i] != name[pocet])
+    while (name[i] != name[pocet]) // najde poziciu v poli pre danu meno
       i++;
 
-    if (i == pocet) {
+    if (i == pocet) { // ak nenajde, prida nove meno do pola
       pocet++;
     }
 
@@ -34,7 +34,7 @@ int main() {
 
   file_R.close();
 
-  for (int i = 0; i < pocet; i++) {
+  for (int i = 0; i < pocet; i++) { // vypis vsetkych mien
     std::cout << name[i] << ": " << name_list[i] << std::endl;
   }
   // 
