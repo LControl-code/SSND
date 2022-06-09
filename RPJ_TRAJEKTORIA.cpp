@@ -18,7 +18,7 @@ int exit_code;
 // Prototypes
 int mode_selection(int *_mode);
 int volny_pad(int mode);
-int vrh_nadol(int mode);
+int Vrh_nahor(int mode);
 int vrh_nahor(int mode);
 int vodorovny_vrh(int mode);
 int sikmy_vrh(int mode);
@@ -61,7 +61,7 @@ int main() {
 
       case 2: {
         // vrh nadol
-        after_challenge(vrh_nadol(mode));
+        after_challenge(Vrh_nahor(mode));
 
         break;
       }
@@ -265,7 +265,7 @@ int volny_pad(int mode) {
   return mode;
 } // * done
 
-int vrh_nadol(int mode) {
+int Vrh_nahor(int mode) {
   // s = v * t + 0.2 * g * pow(t,2);
   // v = v0 + g * t;
   Vzorec Vrh_nadol;
@@ -308,9 +308,8 @@ int vrh_nadol(int mode) {
 
     // ! d = v0 . t + 1/2 . g . t^2
     Vrh_nadol._s = Vrh_nadol._v0 * Vrh_nadol._t + 0.5 * Vrh_nadol._g * pow(Vrh_nadol._t, 2);
-    cout << "\n   ~ Za cas " << Vrh_nadol._t
-         << " padne teleso s pociatocnou rychlostou " << Vrh_nadol._v0
-         << " m/s, do hlbky  " << Vrh_nadol._s << " m." << endl;
+
+    cout << "\n   ~ Za cas " << Vrh_nadol._t << " padne teleso s pociatocnou rychlostou " << Vrh_nadol._v0 << " m/s, do hlbky " << Vrh_nadol._s << " m." << endl;
     Sleep_fix(2);
     break;
   }
@@ -344,7 +343,43 @@ int vrh_nadol(int mode) {
   }
   case 3: {
     clearScreen();
+    Vzorec Vrh_nadol;
+    cout << R"(
 
+## Vypocet vysky s pociatocnou vyskou a rychlostou ##
+    * Potrebne parametre: cas (t), pociatocna rychlost (v0), pociatocna vyska (h))"
+         << endl;
+    cout << "Input (cas v sekundach):  ";
+    cin >> Vrh_nadol._t;
+    cout << "Input (pociatocna rychlost v m/s):  ";
+    cin >> Vrh_nadol._v0;
+    cout << "Input (pociatocna vyska v m):  ";
+    cin >> Vrh_nadol._h;
+
+    //! d = h - (v0 . t + 1/2 . g . t^2)
+    Vrh_nadol._s = Vrh_nadol._h - (Vrh_nadol._v0 * Vrh_nadol._t + 0.5 * Vrh_nadol._g * pow(Vrh_nadol._t, 2));
+    cout << "\n   ~ Za cas " << Vrh_nadol._t
+         << " sekund bude teleso s pociatocnou rychlostou " << Vrh_nadol._v0
+         << " m/s vo vyske " << (Vrh_nadol._s > 0 ? Vrh_nadol._s : 0) << " m."
+         << endl;
+
+    if (Vrh_nadol._s <= 0) {
+      cout << "   ~ Teleso dopadlo na zem "; // (-2.5 sekundy)
+
+      float i = 0.0;
+      if (Vrh_nadol._s < -1) {
+        do { // vypis sekund do padnutia telesa na zem
+          Vrh_nadol._s = Vrh_nadol._h - 0.5 * Vrh_nadol._g * pow(i, 2);
+          if (Vrh_nadol._s <= 0) {
+            cout << "(" << i << " sekundy, na h = 0)";
+          }
+          i += 0.01;
+        } while (Vrh_nadol._s >= 0);
+      }
+      cout << endl;
+    }
+
+    Sleep_fix(2);
 
     break;
   }
@@ -371,6 +406,72 @@ int vrh_nahor(int mode) {
   // s = v * t - 0.2 * g * pow(t,2);
   // v = v0 - g * t;
 
+  clearScreen();
+  Vzorec Vrh_nahor;
+  cout << R"(
+
+## Vrh nahor (3) ##
+
+    1. Vypocet vysky za cas s pociatocnou rychlostou
+    2. Vypocet rychlosti za cas s pociatocnou rychlostou
+    3. Vypocet vysky s pociatocnou vyskou a rychlostou
+    4. Domov
+
+0. Konec
+)" << endl;
+  cout << "Input (mode):  ";
+  cin >> mode;
+
+  switch (mode) {
+  case 1: {
+    // v = v0 - g . t
+    clearScreen();
+    Vzorec Vrh_nahor;
+    cout << R"(
+
+
+## Vypocet rychlosti za cas s pociatocnou rychlostou ##
+    * Potrebne parametre: cas (t), pociatocna rychlost (v0))"
+         << endl;
+
+    cout << "Input (cas v sekundach):  ";
+    cin >> Vrh_nahor._t;
+
+    if (cin.fail())
+      throw "Invalid time";
+
+    cout << "Input (pociatocna rychlost v m/s):  ";
+    cin >> Vrh_nahor._v0;
+
+    if (cin.fail())
+      throw "Invalid starting speed";
+
+    // ! d = v0 . t + 1/2 . g . t^2
+    Vrh_nahor._s = Vrh_nahor._v0 * Vrh_nahor._t - 0.5 * Vrh_nahor._g * pow(Vrh_nahor._t, 2);
+
+    cout << "\n   ~ Za cas " << Vrh_nahor._t
+         << " vystupy teleso s pociatocnou rychlostou " << Vrh_nahor._v0
+         << " m/s, do vysky " << (Vrh_nahor._s > 0 ? Vrh_nahor._s : 0) << " m." << endl;
+
+    if (Vrh_nahor._s <= 0) {
+      cout << "   ~ Teleso dopadlo na zem "; // (-2.5 sekundy)
+
+      float i = 0.0;
+      if (Vrh_nahor._s < -1) {
+        do { // vypis sekund do padnutia telesa na zem
+          Vrh_nahor._s = Vrh_nahor._h - 0.5 * Vrh_nahor._g * pow(i, 2);
+          if (Vrh_nahor._s <= 0) {
+            cout << "(" << i << " sekundy, na h = 0)";
+          }
+          i += 0.01;
+        } while (Vrh_nahor._s >= 0);
+      }
+      cout << endl;
+    }
+    Sleep_fix(2);
+    break;
+  }
+  }
   return mode;
 }
 
