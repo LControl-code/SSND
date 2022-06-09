@@ -16,34 +16,58 @@ int main() {
   int pocet = 0;
   int name_list[MAX] = {};
   bool new_name = true;
-
-  while (std::getline(file_R, name[pocet])) {
-    for (int i = 0; i < name[pocet].length(); i++) {
-
-      if (name[pocet][i] == ' ') {
-        break;
-        new_name = true;
-      } else {
-        first_name[pocet] += name[pocet][i];
-      }
-    }
+  
+  // ucitelova metoda, lahsia
+  std::string text;
+  while (file_R >> name[pocet]) {
+    std::getline(file_R, text);
     int i = 0;
-    while (first_name[i] != first_name[pocet])
+    while (name[i] != name[pocet])
       i++;
 
     if (i == pocet) {
       pocet++;
-    } else {
-      first_name[pocet] = {};
     }
 
     name_list[i]++;
   }
+
   file_R.close();
 
   for (int i = 0; i < pocet; i++) {
-    std::cout << first_name[i] << ": " << name_list[i] << std::endl;
+    std::cout << name[i] << ": " << name_list[i] << std::endl;
   }
+  // 
+  // MOJA METODA
+  //
+  // while (std::getline(file_R, name[pocet])) {
+  //   for (int i = 0; i < name[pocet].length(); i++) {
+
+  //     if (name[pocet][i] == ' ') {
+  //       break;
+  //       new_name = true;
+  //     } else {
+  //       first_name[pocet] += name[pocet][i];
+  //     }
+  //   }
+  //   int i = 0;
+  //   while (first_name[i] != first_name[pocet])
+  //     i++;
+
+  //   if (i == pocet) {
+  //     pocet++;
+  //   } else {
+  //     first_name[pocet] = {};
+  //   }
+
+  //   name_list[i]++;
+  // }
+  // file_R.close();
+
+  // for (int i = 0; i < pocet; i++) {
+  //   std::cout << first_name[i] << ": " << name_list[i] << std::endl;
+  // }
+  
 
   return 0;
 }
