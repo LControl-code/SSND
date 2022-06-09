@@ -4,7 +4,7 @@ using namespace std;
 
 int main() {
 
-  ifstream call("call.txt");
+  ifstream call("./TXT/TXT-call.txt");
   if (!call.is_open())
     return 1;
 
