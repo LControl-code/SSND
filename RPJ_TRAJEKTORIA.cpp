@@ -31,14 +31,14 @@ void Sleep_fix(size_t time);
 class Vzorec {
 public:
   const float _g = 9.81; // m * s ^ -2
-  float _t;              // sekunda
-  float _v;              // m * s ^ -1
-  float _v0;             // m * s ^ -1
-  float _a;              // uhol alpha ako des. cislo, nie stupne
-  float _h;              // meter
-  float _s;              // meter
-  float _x;              // meter
-  float _y;              // meter
+  float _t = 0.;              // sekunda
+  float _v = 0.;              // m * s ^ -1
+  float _v0 = 0.;             // m * s ^ -1
+  float _a = 0.;              // uhol alpha ako des. cislo, nie stupne
+  float _h = 0.;              // meter
+  float _s = 0.;              // meter
+  float _x = 0.;              // meter
+  float _y = 0.;              // meter
 
 };
 
@@ -153,7 +153,7 @@ int volny_pad(int mode) {
   // s = 0.5 * g * pow(t,2);
   // v = g * t;
 
-  Vzorec Volny_pad;
+  
   clearScreen();
   cout << R"(
 
@@ -172,6 +172,7 @@ int volny_pad(int mode) {
   switch (mode) {
   case 1: {
     clearScreen();
+    Vzorec Volny_pad;
     cout << "\n\n## Vypocet vzdialenosti v case ##" << endl;
     cout << "   * Potrebne parametre: cas (t)" << endl;
     cout << "Input (cas v sekundach):  ";
@@ -190,6 +191,7 @@ int volny_pad(int mode) {
   }
   case 2: {
     clearScreen();
+    Vzorec Volny_pad;
     cout << "\n\n## Vypocet rychlosti v case ##" << endl;
     cout << "   * Potrebne parametre: cas (t)" << endl;
     cout << "Input (cas v sekundach):  ";
@@ -209,6 +211,7 @@ int volny_pad(int mode) {
 
   case 3: {
     clearScreen();
+    Vzorec Volny_pad;
     cout << "\n\n## Vypocet vysky s pociatocnou vyskou ##" << endl;
     cout << "   * Potrebne parametre: pociatocna vyska (h), cas padu (t)"
          << endl;
@@ -270,7 +273,7 @@ int volny_pad(int mode) {
 int Vodorovny_vrh(int mode) {
   // s = v * t + 0.2 * g * pow(t,2);
   // v = v0 + g * t;
-  Vzorec Vrh_nadol;
+  
   clearScreen();
   cout << R"(
 
@@ -353,10 +356,18 @@ int Vodorovny_vrh(int mode) {
          << endl;
     cout << "Input (cas v sekundach):  ";
     cin >> Vrh_nadol._t;
+    if(cin.fail())
+      throw "Invalid time";
+
     cout << "Input (pociatocna rychlost v m/s):  ";
     cin >> Vrh_nadol._v0;
+    if(cin.fail())
+      throw "Invalid starting speed";
+
     cout << "Input (pociatocna vyska v m):  ";
     cin >> Vrh_nadol._h;
+    if(cin.fail())
+      throw "Invalid starting height";
 
     //! d = h - (v0 . t + 1/2 . g . t^2)
     Vrh_nadol._s = Vrh_nadol._h - (Vrh_nadol._v0 * Vrh_nadol._t + 0.5 * Vrh_nadol._g * pow(Vrh_nadol._t, 2));
@@ -409,7 +420,7 @@ int vrh_nahor(int mode) {
   // v = v0 - g * t;
 
   clearScreen();
-  Vzorec Vrh_nahor;
+  
   cout << R"(
 
 ## Vrh nahor (3) ##
@@ -428,6 +439,7 @@ int vrh_nahor(int mode) {
   case 1: {
     // v = v0 - g . t
     clearScreen();
+    Vzorec Vrh_nahor;
     cout << R"(
 
 
@@ -475,6 +487,7 @@ int vrh_nahor(int mode) {
   }
   case 2: {
     clearScreen();
+    Vzorec Vrh_nahor;
     cout << R"(
 
 ## Vypocet rychlosti za cas s pociatocnou rychlostou ##
@@ -569,7 +582,7 @@ int vodorovny_vrh(int mode) {
   // x = v0 * t
   // y = h - 0.5 * g * pow(t, 2);
   // v = sqrt(pow(v0, 2) + pow((g * t), 2));
-  Vzorec Vodorovny_vrh;
+  
   clearScreen();
   cout << R"(
 
@@ -752,6 +765,132 @@ int vodorovny_vrh(int mode) {
 int sikmy_vrh(int mode) {
   // x = v0 * t * cos(a);
   // y = v0 * t * sin(a) - 0.5 * g * pow(t, 2);
+  // v = v0 * cos(a);
+  // time = (pow(v0, 2) * sin(a)) / g;
+  // range = (pow(v0, 2) * sin(a) * cos(a)) / g;
+  // altidude = (pow(v0, 2) * sin(a) * sin(a)) / (2 * g);
+
+  clearScreen();
+  cout << R"(
+
+## Sikmy vrh (5) ##
+
+    1. Vypocet dlzky letu v sekundach
+    2. Vypocet vzdialenosti dopadu telesa na zem
+    3. Vypocet maximalnej vysky telesa pod uhlom
+    4. Domov
+
+0. Konec
+)" << endl;
+  cout << "Input (mode):  ";
+  cin >> mode;
+
+  switch (mode) {
+  case 1: {
+    clearScreen();
+    Vzorec Sikmy_vrh;
+    cout << R"(
+
+## Vypocet dlzky letu v sekundach ##
+    * Potrebne parametre: pociatocna rychlost (v0), uhol (a))"
+         << endl;
+    cout << "Input (pociatocna rychlost v m/s):  ";
+    cin >> Sikmy_vrh._v0;
+    if (cin.fail()) {
+      throw "Invalid starting speed";
+    }
+
+    cout << "Input (uhol v stupnoch):  ";
+    cin >> Sikmy_vrh._a;
+    if (cin.fail()) {
+      throw "Invalid angle";
+    }
+
+    Sikmy_vrh._a = Sikmy_vrh._a * M_PI / 180; // uhol v radianoch
+
+    Sikmy_vrh._t = (pow(Sikmy_vrh._v0, 2) * sin(Sikmy_vrh._a)) / Sikmy_vrh._g; // dlzka letu v sekundach
+
+    cout << "\n    ~ Teleso bude letiet " << Sikmy_vrh._t << " sekund." << endl;
+
+    Sleep_fix(2);
+    break;
+
+  }
+  case 2: {
+    clearScreen();
+    Vzorec Sikmy_vrh;
+    cout << R"(
+
+## Vypocet vzdialenosti dopadu telesa na zem ##
+    * Potrebne parametre: pociatocna rychlost (v0), uhol (a))"
+         << endl;
+
+    cout << "Input (pociatocna rychlost v m/s):  ";
+    cin >> Sikmy_vrh._v0;
+    if (cin.fail()) {
+      throw "Invalid starting speed";
+    }
+
+    cout << "Input (uhol v stupnoch):  ";
+    cin >> Sikmy_vrh._a;
+    if (cin.fail()) {
+      throw "Invalid angle";
+    }
+
+    Sikmy_vrh._a = Sikmy_vrh._a * M_PI / 180; // uhol v radianoch
+
+    // range = (pow(v0, 2) * sin(a) * cos(a)) / g;
+    Sikmy_vrh._s = (pow(Sikmy_vrh._v0, 2) * sin(Sikmy_vrh._a) * cos(Sikmy_vrh._a)) / Sikmy_vrh._g;
+
+    cout << "\n    ~ Teleso dopadne na zem v " << Sikmy_vrh._s << " metroch." << endl;
+
+    Sleep_fix(2);
+    break;
+
+  }
+
+  case 3: {
+    clearScreen();
+    Vzorec Sikmy_vrh;
+    
+    cout << R"(
+
+## Vypocet maximalnej vysky telesa pod uhlom ##
+    * Potrebne parametre: pociatocna rychlost (v0), uhol (a))"
+         << endl;
+    cout << "Input (pociatocna rychlost v m/s):  ";
+
+    cin >> Sikmy_vrh._v0;
+    if (cin.fail()) {
+      throw "Invalid starting speed";
+    }
+
+    cout << "Input (uhol v stupnoch):  ";
+    cin >> Sikmy_vrh._a;
+    if (cin.fail()) {
+      throw "Invalid angle";
+    }
+
+    Sikmy_vrh._a = Sikmy_vrh._a * M_PI / 180; // uhol v radianoch
+
+    // altidude = (pow(v0, 2) * sin(a) * sin(a)) / (2 * g);
+    Sikmy_vrh._h = (pow(Sikmy_vrh._v0, 2) * sin(Sikmy_vrh._a) * sin(Sikmy_vrh._a)) / (2 * Sikmy_vrh._g);
+
+    cout << "\n    ~ Teleso dosiahne maximalnu vysku " << Sikmy_vrh._h << " metrov." << endl;
+
+
+    Sleep_fix(2);
+    break;
+  }
+  case 4: {
+    mode = 0;
+    break;
+  }
+  case 0: {
+    game_end = true;
+    break;
+  }
+  }
 
   return mode;
 }
