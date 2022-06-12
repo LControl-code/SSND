@@ -18,7 +18,7 @@ int exit_code;
 // Prototypes
 int mode_selection(int *_mode);
 int volny_pad(int mode);
-int Vrh_nahor(int mode);
+int Vodorovny_vrh(int mode);
 int vrh_nahor(int mode);
 int vodorovny_vrh(int mode);
 int sikmy_vrh(int mode);
@@ -37,6 +37,8 @@ public:
   float _a;              // uhol alpha ako des. cislo, nie stupne
   float _h;              // meter
   float _s;              // meter
+  float _x;              // meter
+  float _y;              // meter
 
 };
 
@@ -61,7 +63,7 @@ int main() {
 
       case 2: {
         // vrh nadol
-        after_challenge(Vrh_nahor(mode));
+        after_challenge(Vodorovny_vrh(mode));
 
         break;
       }
@@ -265,7 +267,7 @@ int volny_pad(int mode) {
   return mode;
 } // * done
 
-int Vrh_nahor(int mode) {
+int Vodorovny_vrh(int mode) {
   // s = v * t + 0.2 * g * pow(t,2);
   // v = v0 + g * t;
   Vzorec Vrh_nadol;
@@ -567,6 +569,136 @@ int vodorovny_vrh(int mode) {
   // x = v0 * t
   // y = h - 0.5 * g * pow(t, 2);
   // v = sqrt(pow(v0, 2) + pow((g * t), 2));
+  Vzorec Vodorovny_vrh;
+  clearScreen();
+  cout << R"(
+
+## Vodorovny vrh (4) ##
+
+    1. Vypocet vzdialenosti dopadu telesa na zem
+    2. Vypocet casu dopadu telesa na zem
+    3. Vypocet suradnic telesa za cas
+    4. Vypocet rychlosti za cas
+    5. Domov
+
+0. Konec
+)" << endl;
+  cout << "Input (mode):  ";
+  cin >> mode;
+
+  switch (mode) {
+  case 1: {
+    clearScreen();
+    Vzorec Vodorovny_vrh;
+    cout << R"(
+
+## Vypocet vzdialenosti dopadu telesa na zem ##
+    * Potrebne parametre: pociatocna rychlost (v0), pociatocna vyska (h0))"
+         << endl;
+
+    cout << "Input (pociatocna rychlost v m/s):  ";
+    cin >> Vodorovny_vrh._v0;
+
+    if (cin.fail())
+      throw "Invalid starting speed";
+
+    cout << "Input (pociatocna vyska v m):  ";
+    cin >> Vodorovny_vrh._h;
+
+    if (cin.fail())
+      throw "Invalid starting height";
+
+    // ! d = v0 * sqr((2h/g))
+    Vodorovny_vrh._s = Vodorovny_vrh._v0 * sqrt(2 * Vodorovny_vrh._h / Vodorovny_vrh._g);
+    cout << "\n   ~ Z vysky " << Vodorovny_vrh._h << " m a pociatocnej rychlosti " << Vodorovny_vrh._v0 << " m/s, teleso padne vo vzdialenosti " << Vodorovny_vrh._s << " m." << endl;
+    Sleep_fix(2);
+    break;
+  }
+  case 2: {
+    clearScreen();
+    Vzorec Vodorovny_vrh;
+    cout << R"(
+
+## Vypocet casu dopadu telesa na zem ##
+    * Potrebne parametre: pociatocna vyska (h0))"
+         << endl;
+
+    cout << "Input (pociatocna vyska v m):  ";
+    cin >> Vodorovny_vrh._h;
+
+    if(cin.fail())
+      throw "Invalid starting height";
+
+    // ! t = sqrt(2 * h / g)
+    Vodorovny_vrh._t = sqrt(2 * Vodorovny_vrh._h / Vodorovny_vrh._g);
+    cout << "\n   ~ Teleso padne na zem z vysky " << Vodorovny_vrh._h << " m (do jeho maximalnej vzdialenosti) po " << Vodorovny_vrh._t << " sekundach." << endl;
+    Sleep_fix(2);
+    break;
+
+  }
+  case 3: {
+    clearScreen();
+    Vzorec Vodorovny_vrh;
+    cout << R"(
+
+## Vypocet suradnic telesa za cas v zakladnych jednotkach ##
+    * Potrebne parametre: pociatocna rychlost (v0), pociatocna vyska (h0), cas (t))"
+         << endl;
+    cout << "Input (pociatocna rychlost v m/s):  ";
+    cin >> Vodorovny_vrh._v0;
+    if (cin.fail()) {
+      throw "Invalid starting speed";
+    }
+
+    cout << "Input (pociatocna vyska v m):  ";
+    cin >> Vodorovny_vrh._h;
+    if (cin.fail()) {
+      throw "Invalid starting height";
+    }
+
+    cout << "Input (cas v sekundach):  ";
+    cin >> Vodorovny_vrh._t;
+    if (cin.fail()) {
+      throw "Invalid time";
+    }
+
+    // ! x = v0 * t
+    // ! y = h - 0.5 * g * pow(t, 2);
+    Vodorovny_vrh._x = Vodorovny_vrh._v0 * Vodorovny_vrh._t;
+    Vodorovny_vrh._y = Vodorovny_vrh._h - 0.5 * Vodorovny_vrh._g * pow(Vodorovny_vrh._t, 2);
+    if (Vodorovny_vrh._y <= 0) {
+      Vodorovny_vrh._x = Vodorovny_vrh._v0 * sqrt(2 * Vodorovny_vrh._h / Vodorovny_vrh._g);
+    }
+
+      cout << "\n   ~ Teleso sa bude nachadzat v suradniciach (" << Vodorovny_vrh._x << " m, " << (Vodorovny_vrh._y > 0 ? Vodorovny_vrh._y : 0) << " m)." << endl;
+      if (Vodorovny_vrh._y <= 0) {
+      cout << "   ~ Teleso dopadlo na zem "; // (-2.5 sekundy)
+
+      float i = 0.0; // pocitadlo sekund
+      if (Vodorovny_vrh._y < -1) {
+        do { // vypis sekund do padnutia telesa na zem
+          Vodorovny_vrh._y = Vodorovny_vrh._h - 0.5 * Vodorovny_vrh._g * pow(i, 2);
+          if (Vodorovny_vrh._y <= 0) {
+            cout << "(" << i << " sekundy, na h = 0)";
+          }
+          i += 0.01;
+        } while (Vodorovny_vrh._y >= 0);
+      }
+      cout << endl;
+    }
+    Sleep_fix(2);
+    break;
+
+  }
+  case 5: {
+    mode = 0;
+    break;
+  }
+  case 0: {
+    game_end = true;
+    break;
+  }
+  }
 
   return mode;
 }
