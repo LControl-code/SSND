@@ -577,8 +577,8 @@ int vodorovny_vrh(int mode) {
 
     1. Vypocet vzdialenosti dopadu telesa na zem
     2. Vypocet casu dopadu telesa na zem
-    3. Vypocet suradnic telesa za cas
-    4. Vypocet rychlosti za cas
+    3. Vypocet suradnic telesa za cas (v zakladnych jednotkach)
+    4. Vypocet rychlosti za cas a maximalnej rychlosti
     5. Domov
 
 0. Konec
@@ -641,7 +641,7 @@ int vodorovny_vrh(int mode) {
     Vzorec Vodorovny_vrh;
     cout << R"(
 
-## Vypocet suradnic telesa za cas v zakladnych jednotkach ##
+## Vypocet suradnic telesa za cas (v zakladnych jednotkach) ##
     * Potrebne parametre: pociatocna rychlost (v0), pociatocna vyska (h0), cas (t))"
          << endl;
     cout << "Input (pociatocna rychlost v m/s):  ";
@@ -689,6 +689,52 @@ int vodorovny_vrh(int mode) {
     Sleep_fix(2);
     break;
 
+  }
+  case 4: {
+    clearScreen();
+    Vzorec Vodorovny_vrh;
+    cout << R"(
+
+## Vypocet rychlosti za cas a maximalnej rychlosti ##
+    * Potrebne parametre: pociatocna rychlost (v0), pociatocna vyska (h0), cas (t))"
+         << endl;
+    cout << "Input (pociatocna rychlost v m/s):  ";
+    cin >> Vodorovny_vrh._v0;
+    if (cin.fail()) {
+      throw "Invalid starting speed";
+    }
+
+    cout << "Input (pociatocna vyska v m):  ";
+    cin >> Vodorovny_vrh._h;
+    if (cin.fail()) {
+      throw "Invalid starting height";
+    }
+
+    cout << "Input (cas v sekundach):  ";
+    cin >> Vodorovny_vrh._t;
+    if (cin.fail()) {
+      throw "Invalid time";
+    }
+
+    // ! v = sqrt(pow(v0, 2) + pow(g*t, 2)); // v = sqrt(v0^2 + (g*t)^2)
+    // ! max v = sqrt(pow(v0, 2) + 2*g*h); // max v = sqrt(v0^2 + 2*g*h)
+
+    Vodorovny_vrh._v = sqrt(pow(Vodorovny_vrh._v0, 2) + pow(Vodorovny_vrh._g*Vodorovny_vrh._t, 2));
+    
+
+    if (Vodorovny_vrh._v > (sqrt(pow(Vodorovny_vrh._v0, 2) + 2*Vodorovny_vrh._g*Vodorovny_vrh._h)) ) {
+      Vodorovny_vrh._v = sqrt(pow(Vodorovny_vrh._v0, 2) + 2*Vodorovny_vrh._g*Vodorovny_vrh._h);
+
+      cout << "\n   ~ Teleso dosiahlo maximalnu rychlost " << Vodorovny_vrh._v << " m/s." << endl;
+    } else {
+      cout << "\n   ~ Teleso bude mat za cas " << Vodorovny_vrh._t << " sekund, rychlost " << (Vodorovny_vrh._v > 0 ? Vodorovny_vrh._v : 0) << " m/s." << endl;
+
+      Vodorovny_vrh._v = sqrt(pow(Vodorovny_vrh._v0, 2) + 2*Vodorovny_vrh._g*Vodorovny_vrh._h);
+      cout << "   ~ Teleso dosiahne maximalnu rychlost " << Vodorovny_vrh._v << " m/s." << endl;
+    }
+
+    Sleep_fix(2);
+    break;
   }
   case 5: {
     mode = 0;
