@@ -429,7 +429,7 @@ int vrh_nahor(int mode) {
     cout << R"(
 
 
-## Vypocet rychlosti za cas s pociatocnou rychlostou ##
+## Vypocet vysky za cas s pociatocnou rychlostou ##
     * Potrebne parametre: cas (t), pociatocna rychlost (v0))"
          << endl;
 
@@ -442,7 +442,7 @@ int vrh_nahor(int mode) {
     cout << "Input (pociatocna rychlost v m/s):  ";
     cin >> Vrh_nahor._v0;
 
-    if (cin.fail())
+    if (cin.fail()) // vyhodenie vynimky ak sa nenacita spravne cislo
       throw "Invalid starting speed";
 
     // ! d = v0 . t + 1/2 . g . t^2
@@ -500,6 +500,56 @@ int vrh_nahor(int mode) {
   case 3: {
     clearScreen();
     Vzorec Vrh_nahor;
+    cout << R"(
+
+## Vypocet vysky s pociatocnou vyskou a rychlostou ##
+    * Potrebne parametre: cas (t), pociatocna rychlost (v0), pociatocna vyska (h0))"
+         << endl;
+         
+    cout << "Input (cas v sekundach):  ";
+    cin >> Vrh_nahor._t;
+
+    if (cin.fail())
+      throw "Invalid time";
+
+    cout << "Input (pociatocna rychlost v m/s):  ";
+    cin >> Vrh_nahor._v0;
+
+    if (cin.fail()) // vyhodenie vynimky ak sa nenacita spravne cislo
+      throw "Invalid starting speed";
+
+    cout << "Input (pociatocna vyska v m):  ";
+    cin >> Vrh_nahor._h;
+
+    if (cin.fail())
+      throw "Invalid starting height";
+
+
+    // ! d = h0 - (v0 . t + 1/2 . g . t^2)
+    Vrh_nahor._s = Vrh_nahor._h + (Vrh_nahor._v0 * Vrh_nahor._t - 0.5 * Vrh_nahor._g * pow(Vrh_nahor._t, 2));
+
+    cout << "\n   ~ Za cas " << Vrh_nahor._t
+         << " vystupy teleso s pociatocnou rychlostou " << Vrh_nahor._v0
+         << " m/s a pociatocnou vyskou " << Vrh_nahor._h << " m, do vysky " << (Vrh_nahor._s > 0 ? Vrh_nahor._s : 0) << " m."
+         << endl;
+
+    if (Vrh_nahor._s <= 0) {
+      cout << "   ~ Teleso dopadlo na zem "; // (-2.5 sekundy)
+
+      float i = 0.0; // pocitadlo sekund
+      if (Vrh_nahor._s < -1) {
+        do { // vypis sekund do padnutia telesa na zem
+          Vrh_nahor._s = Vrh_nahor._h + (Vrh_nahor._v0 * i - 0.5 * Vrh_nahor._g * pow(i, 2));
+          if (Vrh_nahor._s <= 0) {
+            cout << "(" << i << " sekundy, na h = 0)";
+          }
+          i += 0.01;
+        } while (Vrh_nahor._s >= 0);
+      }
+      cout << endl;
+    }
+    Sleep_fix(2);
+    break;
   }
   case 4: {
     mode = 0;
