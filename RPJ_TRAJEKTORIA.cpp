@@ -379,7 +379,7 @@ int Vodorovny_vrh(int mode) {
       float i = 0.0;
       if (Vrh_nadol._s < -1) {
         do { // vypis sekund do padnutia telesa na zem
-          Vrh_nadol._s = Vrh_nadol._h - 0.5 * Vrh_nadol._g * pow(i, 2);
+          Vrh_nadol._s = Vrh_nadol._h - (Vrh_nadol._v0 * i + 0.5 * Vrh_nadol._g * pow(i, 2));
           if (Vrh_nadol._s <= 0) {
             std::cout << "(" << i << " sekundy, na h = 0)";
           }
@@ -470,7 +470,7 @@ int vrh_nahor(int mode) {
       float i = 0.0;
       if (Vrh_nahor._s < -1) {
         do { // vypis sekund do padnutia telesa na zem
-          Vrh_nahor._s = Vrh_nahor._h - 0.5 * Vrh_nahor._g * pow(i, 2);
+          Vrh_nahor._s = Vrh_nahor._v0 * i - 0.5 * Vrh_nahor._g * pow(i, 2);
           if (Vrh_nahor._s <= 0) {
             std::cout << "(" << i << " sekundy, na h = 0)";
           }
