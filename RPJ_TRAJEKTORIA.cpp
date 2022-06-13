@@ -919,7 +919,7 @@ void clearScreen() {
 #else
     system("clear 2> /dev/null");
     if(!system("echo $?")){
-      std::cout << "\033[2J\033[1; 1H";
+      std::cout << "\033[2J\033[1;]";
     }
 #endif
 }
