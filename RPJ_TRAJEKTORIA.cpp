@@ -338,7 +338,7 @@ int Vodorovny_vrh(int mode) {
 
 
     Vrh_nadol._v = Vrh_nadol._v0 + Vrh_nadol._g * Vrh_nadol._t;
-    std::cout << "\n   ~ Za cas << " << Vrh_nadol._t<< " sekund bude mat teleso s pociatocnou rychlostou " << Vrh_nadol._v0 << " m/s, rychlost " << Vrh_nadol._v << " m/s." << std::endl;
+    std::cout << "\n   ~ Za cas " << Vrh_nadol._t<< " sekund bude mat teleso s pociatocnou rychlostou " << Vrh_nadol._v0 << " m/s, rychlost " << Vrh_nadol._v << " m/s." << std::endl;
     Sleep_fix(2);
 
     break;
@@ -504,7 +504,7 @@ int vrh_nahor(int mode) {
 
 
     Vrh_nahor._v = Vrh_nahor._v0 - Vrh_nahor._g * Vrh_nahor._t;
-    std::cout << "\n   ~ Za cas << " << Vrh_nahor._t<< " sekund bude mat teleso s pociatocnou rychlostou " << Vrh_nahor._v0 << " m/s, rychlost " << (Vrh_nahor._v > 0 ? Vrh_nahor._v : 0) << " m/s." << std::endl;
+    std::cout << "\n   ~ Za cas " << Vrh_nahor._t<< " sekund bude mat teleso s pociatocnou rychlostou " << Vrh_nahor._v0 << " m/s, rychlost " << (Vrh_nahor._v > 0 ? Vrh_nahor._v : 0) << " m/s." << std::endl;
     Sleep_fix(2);
     break;
 
