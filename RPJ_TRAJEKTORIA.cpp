@@ -504,7 +504,7 @@ int vrh_nahor(int mode) {
 
 
     Vrh_nahor._v = Vrh_nahor._v0 - Vrh_nahor._g * Vrh_nahor._t;
-    std::cout << "\n   ~ Za cas " << Vrh_nahor._t<< " sekund bude mat teleso s pociatocnou rychlostou " << Vrh_nahor._v0 << " m/s, rychlost " << (Vrh_nahor._v > 0 ? Vrh_nahor._v : 0) << " m/s." << std::endl;
+    std::cout << "\n   ~ Za cas " << Vrh_nahor._t<< " sekund bude mat teleso s pociatocnou rychlostou " << Vrh_nahor._v0 << " m/s, rychlost " << (Vrh_nahor._v > 0 ? Vrh_nahor._v : Vrh_nahor._v * -1) << " m/s" << (Vrh_nahor._v > 0 ? "." : " (smerom dole)") << std::endl;
     Sleep_fix(2);
     break;
 
