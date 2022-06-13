@@ -1,15 +1,12 @@
 #include <cmath>
-#include <cstdlib>
 #include <iostream>
-#include <string>
+#include <algorithm>
 
 #ifdef WINDOWS
   #include <windows.h>
 #else
   #include <unistd.h>
 #endif
-
-using namespace std;
 
 // Global variables
 bool game_end = false;
@@ -44,8 +41,8 @@ public:
 
 int main() {
 
-  cout << fixed;
-  cout.precision(2);
+  std::cout << std::fixed;
+  std::cout.precision(2);
 
   int mode; // neccesarry for program
 
@@ -102,24 +99,24 @@ int main() {
     catch (const char *txtException) {
       game_end = true;
       exit_code = 120;
-      cout << "\nError: " << txtException << "!" << endl;
+      std::cout << "\nError: " << txtException << "!" << std::endl;
     }
 
     catch (const int numException) {
       game_end = true;
       exit_code = numException;
-      cout << "\nExit code: " << numException << endl;
+      std::cout << "\nExit code: " << numException << std::endl;
     }
 
     catch (...) {
       game_end = true;
       exit_code = 123;
-      cout << "\nUndefined exception, quiting . . . " << endl;
+      std::cout << "\nUndefined exception, quiting . . . " << std::endl;
     }
 
   } while (!game_end);
 
-  cout << "\nExiting!" << endl;
+  std::cout << "\nExiting!" << std::endl;
   return exit_code;
 } // for getting to different states of throws
 
@@ -127,7 +124,7 @@ int mode_selection(int *_mode) {
 
   clearScreen();
 
-  cout << R"(
+  std::cout << R"(
 
 Vyberte si prostredie pocitania:
 
@@ -138,11 +135,11 @@ Vyberte si prostredie pocitania:
     5. Sikmy vrh
 
   0. Koniec
-)" << endl;
-  cout << "Input (mode): ";
-  cin >> *_mode;
+)" << std::endl;
+  std::cout << "Input (mode): ";
+  std::cin >> *_mode;
 
-  if (cin.fail() || *_mode < 0 || *_mode > 5)
+  if (std::cin.fail() || *_mode < 0 || *_mode > 5)
     throw "Invalid input";
 
   return *_mode;
@@ -155,7 +152,7 @@ int volny_pad(int mode) {
 
   
   clearScreen();
-  cout << R"(
+  std::cout << R"(
 
 ## Volny pad (1) ##
 
@@ -165,26 +162,26 @@ int volny_pad(int mode) {
     4. Domov
 
 0. Konec
-)" << endl;
-  cout << "Input (mode):  ";
-  cin >> mode;
+)" << std::endl;
+  std::cout << "Input (mode):  ";
+  std::cin >> mode;
 
   switch (mode) {
   case 1: {
     clearScreen();
     Vzorec Volny_pad;
-    cout << "\n\n## Vypocet vzdialenosti v case ##" << endl;
-    cout << "   * Potrebne parametre: cas (t)" << endl;
-    cout << "Input (cas v sekundach):  ";
-    cin >> Volny_pad._t;
+    std::cout << "\n\n## Vypocet vzdialenosti v case ##" << std::endl;
+    std::cout << "   * Potrebne parametre: cas (t)" << std::endl;
+    std::cout << "Input (cas v sekundach):  ";
+    std::cin >> Volny_pad._t;
 
-    if (cin.fail())
+    if (std::cin.fail())
       throw "Invalid time";
 
     Volny_pad._s = 0.5 * Volny_pad._g * Volny_pad._t; // vzorec
 
-    cout << "\n ~ Za cas " << Volny_pad._t << " sekund prejde teleso volnym padom do vzdialenosti "
-         << Volny_pad._s << " m" << endl;
+    std::cout << "\n ~ Za cas " << Volny_pad._t << " sekund prejde teleso volnym padom do vzdialenosti "
+         << Volny_pad._s << " m" << std::endl;
 
     Sleep_fix(2);
     break;
@@ -192,18 +189,18 @@ int volny_pad(int mode) {
   case 2: {
     clearScreen();
     Vzorec Volny_pad;
-    cout << "\n\n## Vypocet rychlosti v case ##" << endl;
-    cout << "   * Potrebne parametre: cas (t)" << endl;
-    cout << "Input (cas v sekundach):  ";
-    cin >> Volny_pad._t;
+    std::cout << "\n\n## Vypocet rychlosti v case ##" << std::endl;
+    std::cout << "   * Potrebne parametre: cas (t)" << std::endl;
+    std::cout << "Input (cas v sekundach):  ";
+    std::cin >> Volny_pad._t;
 
-    if (cin.fail())
+    if (std::cin.fail())
       throw "Invalid time";
 
     Volny_pad._v = Volny_pad._g * Volny_pad._t; // vzorec
 
-    cout << "\n ~ Za cas " << Volny_pad._t << " bude mat teleso rychlost "
-         << Volny_pad._v << " m/s" << endl;
+    std::cout << "\n ~ Za cas " << Volny_pad._t << " bude mat teleso rychlost "
+         << Volny_pad._v << " m/s" << std::endl;
 
     Sleep_fix(2);
     break;
@@ -212,40 +209,40 @@ int volny_pad(int mode) {
   case 3: {
     clearScreen();
     Vzorec Volny_pad;
-    cout << "\n\n## Vypocet vysky s pociatocnou vyskou ##" << endl;
-    cout << "   * Potrebne parametre: pociatocna vyska (h), cas padu (t)"
-         << endl;
-    cout << "Input (vyska v metroch):  ";
-    cin >> Volny_pad._h;
+    std::cout << "\n\n## Vypocet vysky s pociatocnou vyskou ##" << std::endl;
+    std::cout << "   * Potrebne parametre: pociatocna vyska (h), cas padu (t)"
+         << std::endl;
+    std::cout << "Input (vyska v metroch):  ";
+    std::cin >> Volny_pad._h;
 
-    if (cin.fail())
+    if (std::cin.fail())
       throw "Invalid height";
 
-    cout << "Input (cas v sekundach):  ";
-    cin >> Volny_pad._t;
+    std::cout << "Input (cas v sekundach):  ";
+    std::cin >> Volny_pad._t;
 
-    if (cin.fail())
+    if (std::cin.fail())
       throw "Invalid time";
 
     Volny_pad._s = Volny_pad._h - 0.5 * Volny_pad._g * pow(Volny_pad._t, 2);
 
-    cout << "\n ~ Za cas " << Volny_pad._t << " (s) z vysky " << Volny_pad._h
-         << " (m) bude teleso vo vyske " << (Volny_pad._s > 0 ? Volny_pad._s : 0) << " m" << endl;
+    std::cout << "\n ~ Za cas " << Volny_pad._t << " (s) z vysky " << Volny_pad._h
+         << " (m) bude teleso vo vyske " << (Volny_pad._s > 0 ? Volny_pad._s : 0) << " m" << std::endl;
 
     if (Volny_pad._s <= 0) {
-      cout << "   ~ Teleso dopadlo na zem "; // (-2.5 sekundy)
+      std::cout << "   ~ Teleso dopadlo na zem "; // (-2.5 sekundy)
 
       float i = 0.0;
       if (Volny_pad._s < -1) {
         do { // vypis sekund do padnutia telesa na zem
           Volny_pad._s = Volny_pad._h - 0.5 * Volny_pad._g * pow(i, 2);
           if (Volny_pad._s <= 0) {
-            cout << "(" << i << " sekundy, na h = 0)";
+            std::cout << "(" << i << " sekundy, na h = 0)";
           }
           i += 0.01;
         } while (Volny_pad._s >= 0);
       }
-    cout << endl;
+    std::cout << std::endl;
     }
 
     Sleep_fix(2);
@@ -275,7 +272,7 @@ int Vodorovny_vrh(int mode) {
   // v = v0 + g * t;
   
   clearScreen();
-  cout << R"(
+  std::cout << R"(
 
 ## Vrh nadol (2) ##
 
@@ -285,36 +282,36 @@ int Vodorovny_vrh(int mode) {
     4. Domov
 
 0. Konec
-)" << endl;
-  cout << "Input (mode):  ";
-  cin >> mode;
+)" << std::endl;
+  std::cout << "Input (mode):  ";
+  std::cin >> mode;
 
   switch (mode) {
   case 1: {
     clearScreen();
     Vzorec Vrh_nadol;
-    cout << R"(
+    std::cout << R"(
 
 ## Vypocet rychlosti za cas s pociatocnou rychlostou ##
     * Potrebne parametre: cas (t), pociatocna rychlost (v0))"
-         << endl;
+         << std::endl;
     
-    cout << "Input (cas v sekundach):  ";
-    cin >> Vrh_nadol._t;
+    std::cout << "Input (cas v sekundach):  ";
+    std::cin >> Vrh_nadol._t;
 
-    if (cin.fail())
+    if (std::cin.fail())
       throw "Invalid time";
 
-    cout << "Input (pociatocna rychlost v m/s):  ";
-    cin >> Vrh_nadol._v0;
+    std::cout << "Input (pociatocna rychlost v m/s):  ";
+    std::cin >> Vrh_nadol._v0;
 
-    if (cin.fail())
+    if (std::cin.fail())
       throw "Invalid starting speed";
 
     // ! d = v0 . t + 1/2 . g . t^2
     Vrh_nadol._s = Vrh_nadol._v0 * Vrh_nadol._t + 0.5 * Vrh_nadol._g * pow(Vrh_nadol._t, 2);
 
-    cout << "\n   ~ Za cas " << Vrh_nadol._t << " padne teleso s pociatocnou rychlostou " << Vrh_nadol._v0 << " m/s, do hlbky " << Vrh_nadol._s << " m." << endl;
+    std::cout << "\n   ~ Za cas " << Vrh_nadol._t << " padne teleso s pociatocnou rychlostou " << Vrh_nadol._v0 << " m/s, do hlbky " << Vrh_nadol._s << " m." << std::endl;
     Sleep_fix(2);
     break;
   }
@@ -322,26 +319,26 @@ int Vodorovny_vrh(int mode) {
     // v = v0 + g . t
     clearScreen();
     Vzorec Vrh_nadol;
-    cout << R"(
+    std::cout << R"(
 
 ## Vypocet rychlosti za cas s pociatocnou rychlostou ##
     * Potrebne parametre: cas (t), pociatocna rychlost (v0))"
-         << endl;
-    cout << "Input (cas v sekundach):  ";
-    cin >> Vrh_nadol._t;
+         << std::endl;
+    std::cout << "Input (cas v sekundach):  ";
+    std::cin >> Vrh_nadol._t;
 
-    if (cin.fail())
+    if (std::cin.fail())
       throw "Invalid time";
 
-    cout << "Input (pociatocna rychlost v m/s):  ";
-    cin >> Vrh_nadol._v0;
+    std::cout << "Input (pociatocna rychlost v m/s):  ";
+    std::cin >> Vrh_nadol._v0;
 
-    if (cin.fail())
+    if (std::cin.fail())
       throw "Invalid starting speed";
 
 
     Vrh_nadol._v = Vrh_nadol._v0 + Vrh_nadol._g * Vrh_nadol._t;
-    cout << "\n   ~ Za cas << " << Vrh_nadol._t<< " sekund bude mat teleso s pociatocnou rychlostou " << Vrh_nadol._v0 << " m/s, rychlost " << Vrh_nadol._v << " m/s." << endl;
+    std::cout << "\n   ~ Za cas << " << Vrh_nadol._t<< " sekund bude mat teleso s pociatocnou rychlostou " << Vrh_nadol._v0 << " m/s, rychlost " << Vrh_nadol._v << " m/s." << std::endl;
     Sleep_fix(2);
 
     break;
@@ -349,47 +346,47 @@ int Vodorovny_vrh(int mode) {
   case 3: {
     clearScreen();
     Vzorec Vrh_nadol;
-    cout << R"(
+    std::cout << R"(
 
 ## Vypocet vysky s pociatocnou vyskou a rychlostou ##
     * Potrebne parametre: cas (t), pociatocna rychlost (v0), pociatocna vyska (h))"
-         << endl;
-    cout << "Input (cas v sekundach):  ";
-    cin >> Vrh_nadol._t;
-    if(cin.fail())
+         << std::endl;
+    std::cout << "Input (cas v sekundach):  ";
+    std::cin >> Vrh_nadol._t;
+    if(std::cin.fail())
       throw "Invalid time";
 
-    cout << "Input (pociatocna rychlost v m/s):  ";
-    cin >> Vrh_nadol._v0;
-    if(cin.fail())
+    std::cout << "Input (pociatocna rychlost v m/s):  ";
+    std::cin >> Vrh_nadol._v0;
+    if(std::cin.fail())
       throw "Invalid starting speed";
 
-    cout << "Input (pociatocna vyska v m):  ";
-    cin >> Vrh_nadol._h;
-    if(cin.fail())
+    std::cout << "Input (pociatocna vyska v m):  ";
+    std::cin >> Vrh_nadol._h;
+    if(std::cin.fail())
       throw "Invalid starting height";
 
     //! d = h - (v0 . t + 1/2 . g . t^2)
     Vrh_nadol._s = Vrh_nadol._h - (Vrh_nadol._v0 * Vrh_nadol._t + 0.5 * Vrh_nadol._g * pow(Vrh_nadol._t, 2));
-    cout << "\n   ~ Za cas " << Vrh_nadol._t
+    std::cout << "\n   ~ Za cas " << Vrh_nadol._t
          << " sekund bude teleso s pociatocnou rychlostou " << Vrh_nadol._v0
          << " m/s vo vyske " << (Vrh_nadol._s > 0 ? Vrh_nadol._s : 0) << " m."
-         << endl;
+         << std::endl;
 
     if (Vrh_nadol._s <= 0) {
-      cout << "   ~ Teleso dopadlo na zem "; // (-2.5 sekundy)
+      std::cout << "   ~ Teleso dopadlo na zem "; // (-2.5 sekundy)
 
       float i = 0.0;
       if (Vrh_nadol._s < -1) {
         do { // vypis sekund do padnutia telesa na zem
           Vrh_nadol._s = Vrh_nadol._h - 0.5 * Vrh_nadol._g * pow(i, 2);
           if (Vrh_nadol._s <= 0) {
-            cout << "(" << i << " sekundy, na h = 0)";
+            std::cout << "(" << i << " sekundy, na h = 0)";
           }
           i += 0.01;
         } while (Vrh_nadol._s >= 0);
       }
-      cout << endl;
+      std::cout << std::endl;
     }
 
     Sleep_fix(2);
@@ -421,7 +418,7 @@ int vrh_nahor(int mode) {
 
   clearScreen();
   
-  cout << R"(
+  std::cout << R"(
 
 ## Vrh nahor (3) ##
 
@@ -431,56 +428,56 @@ int vrh_nahor(int mode) {
     4. Domov
 
 0. Konec
-)" << endl;
-  cout << "Input (mode):  ";
-  cin >> mode;
+)" << std::endl;
+  std::cout << "Input (mode):  ";
+  std::cin >> mode;
 
   switch (mode) {
   case 1: {
     // v = v0 - g . t
     clearScreen();
     Vzorec Vrh_nahor;
-    cout << R"(
+    std::cout << R"(
 
 
 ## Vypocet vysky za cas s pociatocnou rychlostou ##
     * Potrebne parametre: cas (t), pociatocna rychlost (v0))"
-         << endl;
+         << std::endl;
 
-    cout << "Input (cas v sekundach):  ";
-    cin >> Vrh_nahor._t;
+    std::cout << "Input (cas v sekundach):  ";
+    std::cin >> Vrh_nahor._t;
 
-    if (cin.fail())
+    if (std::cin.fail())
       throw "Invalid time";
 
-    cout << "Input (pociatocna rychlost v m/s):  ";
-    cin >> Vrh_nahor._v0;
+    std::cout << "Input (pociatocna rychlost v m/s):  ";
+    std::cin >> Vrh_nahor._v0;
 
-    if (cin.fail()) // vyhodenie vynimky ak sa nenacita spravne cislo
+    if (std::cin.fail()) // vyhodenie vynimky ak sa nenacita spravne cislo
       throw "Invalid starting speed";
 
     // ! d = v0 . t + 1/2 . g . t^2
     Vrh_nahor._s = Vrh_nahor._v0 * Vrh_nahor._t - 0.5 * Vrh_nahor._g * pow(Vrh_nahor._t, 2);
 
-    cout << "\n   ~ Za cas " << Vrh_nahor._t
+    std::cout << "\n   ~ Za cas " << Vrh_nahor._t
          << " vystupy teleso s pociatocnou rychlostou " << Vrh_nahor._v0
          << " m/s, do vysky " << (Vrh_nahor._s > 0 ? Vrh_nahor._s : 0) << " m."
-         << endl;
+         << std::endl;
 
     if (Vrh_nahor._s <= 0) {
-      cout << "   ~ Teleso dopadlo na zem "; // (-2.5 sekundy)
+      std::cout << "   ~ Teleso dopadlo na zem "; // (-2.5 sekundy)
 
       float i = 0.0;
       if (Vrh_nahor._s < -1) {
         do { // vypis sekund do padnutia telesa na zem
           Vrh_nahor._s = Vrh_nahor._h - 0.5 * Vrh_nahor._g * pow(i, 2);
           if (Vrh_nahor._s <= 0) {
-            cout << "(" << i << " sekundy, na h = 0)";
+            std::cout << "(" << i << " sekundy, na h = 0)";
           }
           i += 0.01;
         } while (Vrh_nahor._s >= 0);
       }
-      cout << endl;
+      std::cout << std::endl;
     }
     Sleep_fix(2);
     break;
@@ -488,26 +485,26 @@ int vrh_nahor(int mode) {
   case 2: {
     clearScreen();
     Vzorec Vrh_nahor;
-    cout << R"(
+    std::cout << R"(
 
 ## Vypocet rychlosti za cas s pociatocnou rychlostou ##
     * Potrebne parametre: cas (t), pociatocna rychlost (v0))"
-         << endl;
-    cout << "Input (cas v sekundach):  ";
-    cin >> Vrh_nahor._t;
+         << std::endl;
+    std::cout << "Input (cas v sekundach):  ";
+    std::cin >> Vrh_nahor._t;
 
-    if (cin.fail())
+    if (std::cin.fail())
       throw "Invalid time";
 
-    cout << "Input (pociatocna rychlost v m/s):  ";
-    cin >> Vrh_nahor._v0;
+    std::cout << "Input (pociatocna rychlost v m/s):  ";
+    std::cin >> Vrh_nahor._v0;
 
-    if (cin.fail())
+    if (std::cin.fail())
       throw "Invalid starting speed";
 
 
     Vrh_nahor._v = Vrh_nahor._v0 - Vrh_nahor._g * Vrh_nahor._t;
-    cout << "\n   ~ Za cas << " << Vrh_nahor._t<< " sekund bude mat teleso s pociatocnou rychlostou " << Vrh_nahor._v0 << " m/s, rychlost " << (Vrh_nahor._v > 0 ? Vrh_nahor._v : 0) << " m/s." << endl;
+    std::cout << "\n   ~ Za cas << " << Vrh_nahor._t<< " sekund bude mat teleso s pociatocnou rychlostou " << Vrh_nahor._v0 << " m/s, rychlost " << (Vrh_nahor._v > 0 ? Vrh_nahor._v : 0) << " m/s." << std::endl;
     Sleep_fix(2);
     break;
 
@@ -515,53 +512,53 @@ int vrh_nahor(int mode) {
   case 3: {
     clearScreen();
     Vzorec Vrh_nahor;
-    cout << R"(
+    std::cout << R"(
 
 ## Vypocet vysky s pociatocnou vyskou a rychlostou ##
     * Potrebne parametre: cas (t), pociatocna rychlost (v0), pociatocna vyska (h0))"
-         << endl;
+         << std::endl;
          
-    cout << "Input (cas v sekundach):  ";
-    cin >> Vrh_nahor._t;
+    std::cout << "Input (cas v sekundach):  ";
+    std::cin >> Vrh_nahor._t;
 
-    if (cin.fail())
+    if (std::cin.fail())
       throw "Invalid time";
 
-    cout << "Input (pociatocna rychlost v m/s):  ";
-    cin >> Vrh_nahor._v0;
+    std::cout << "Input (pociatocna rychlost v m/s):  ";
+    std::cin >> Vrh_nahor._v0;
 
-    if (cin.fail()) // vyhodenie vynimky ak sa nenacita spravne cislo
+    if (std::cin.fail()) // vyhodenie vynimky ak sa nenacita spravne cislo
       throw "Invalid starting speed";
 
-    cout << "Input (pociatocna vyska v m):  ";
-    cin >> Vrh_nahor._h;
+    std::cout << "Input (pociatocna vyska v m):  ";
+    std::cin >> Vrh_nahor._h;
 
-    if (cin.fail())
+    if (std::cin.fail())
       throw "Invalid starting height";
 
 
     // ! d = h0 - (v0 . t + 1/2 . g . t^2)
     Vrh_nahor._s = Vrh_nahor._h + (Vrh_nahor._v0 * Vrh_nahor._t - 0.5 * Vrh_nahor._g * pow(Vrh_nahor._t, 2));
 
-    cout << "\n   ~ Za cas " << Vrh_nahor._t
+    std::cout << "\n   ~ Za cas " << Vrh_nahor._t
          << " vystupy teleso s pociatocnou rychlostou " << Vrh_nahor._v0
          << " m/s a pociatocnou vyskou " << Vrh_nahor._h << " m, do vysky " << (Vrh_nahor._s > 0 ? Vrh_nahor._s : 0) << " m."
-         << endl;
+         << std::endl;
 
     if (Vrh_nahor._s <= 0) {
-      cout << "   ~ Teleso dopadlo na zem "; // (-2.5 sekundy)
+      std::cout << "   ~ Teleso dopadlo na zem "; // (-2.5 sekundy)
 
       float i = 0.0; // pocitadlo sekund
       if (Vrh_nahor._s < -1) {
         do { // vypis sekund do padnutia telesa na zem
           Vrh_nahor._s = Vrh_nahor._h + (Vrh_nahor._v0 * i - 0.5 * Vrh_nahor._g * pow(i, 2));
           if (Vrh_nahor._s <= 0) {
-            cout << "(" << i << " sekundy, na h = 0)";
+            std::cout << "(" << i << " sekundy, na h = 0)";
           }
           i += 0.01;
         } while (Vrh_nahor._s >= 0);
       }
-      cout << endl;
+      std::cout << std::endl;
     }
     Sleep_fix(2);
     break;
@@ -584,7 +581,7 @@ int vodorovny_vrh(int mode) {
   // v = sqrt(pow(v0, 2) + pow((g * t), 2));
   
   clearScreen();
-  cout << R"(
+  std::cout << R"(
 
 ## Vodorovny vrh (4) ##
 
@@ -595,56 +592,56 @@ int vodorovny_vrh(int mode) {
     5. Domov
 
 0. Konec
-)" << endl;
-  cout << "Input (mode):  ";
-  cin >> mode;
+)" << std::endl;
+  std::cout << "Input (mode):  ";
+  std::cin >> mode;
 
   switch (mode) {
   case 1: {
     clearScreen();
     Vzorec Vodorovny_vrh;
-    cout << R"(
+    std::cout << R"(
 
 ## Vypocet vzdialenosti dopadu telesa na zem ##
     * Potrebne parametre: pociatocna rychlost (v0), pociatocna vyska (h0))"
-         << endl;
+         << std::endl;
 
-    cout << "Input (pociatocna rychlost v m/s):  ";
-    cin >> Vodorovny_vrh._v0;
+    std::cout << "Input (pociatocna rychlost v m/s):  ";
+    std::cin >> Vodorovny_vrh._v0;
 
-    if (cin.fail())
+    if (std::cin.fail())
       throw "Invalid starting speed";
 
-    cout << "Input (pociatocna vyska v m):  ";
-    cin >> Vodorovny_vrh._h;
+    std::cout << "Input (pociatocna vyska v m):  ";
+    std::cin >> Vodorovny_vrh._h;
 
-    if (cin.fail())
+    if (std::cin.fail())
       throw "Invalid starting height";
 
     // ! d = v0 * sqr((2h/g))
     Vodorovny_vrh._s = Vodorovny_vrh._v0 * sqrt(2 * Vodorovny_vrh._h / Vodorovny_vrh._g);
-    cout << "\n   ~ Z vysky " << Vodorovny_vrh._h << " m a pociatocnej rychlosti " << Vodorovny_vrh._v0 << " m/s, teleso padne vo vzdialenosti " << Vodorovny_vrh._s << " m." << endl;
+    std::cout << "\n   ~ Z vysky " << Vodorovny_vrh._h << " m a pociatocnej rychlosti " << Vodorovny_vrh._v0 << " m/s, teleso padne vo vzdialenosti " << Vodorovny_vrh._s << " m." << std::endl;
     Sleep_fix(2);
     break;
   }
   case 2: {
     clearScreen();
     Vzorec Vodorovny_vrh;
-    cout << R"(
+    std::cout << R"(
 
 ## Vypocet casu dopadu telesa na zem ##
     * Potrebne parametre: pociatocna vyska (h0))"
-         << endl;
+         << std::endl;
 
-    cout << "Input (pociatocna vyska v m):  ";
-    cin >> Vodorovny_vrh._h;
+    std::cout << "Input (pociatocna vyska v m):  ";
+    std::cin >> Vodorovny_vrh._h;
 
-    if(cin.fail())
+    if(std::cin.fail())
       throw "Invalid starting height";
 
     // ! t = sqrt(2 * h / g)
     Vodorovny_vrh._t = sqrt(2 * Vodorovny_vrh._h / Vodorovny_vrh._g);
-    cout << "\n   ~ Teleso padne na zem z vysky " << Vodorovny_vrh._h << " m (do jeho maximalnej vzdialenosti) po " << Vodorovny_vrh._t << " sekundach." << endl;
+    std::cout << "\n   ~ Teleso padne na zem z vysky " << Vodorovny_vrh._h << " m (do jeho maximalnej vzdialenosti) po " << Vodorovny_vrh._t << " sekundach." << std::endl;
     Sleep_fix(2);
     break;
 
@@ -652,26 +649,26 @@ int vodorovny_vrh(int mode) {
   case 3: {
     clearScreen();
     Vzorec Vodorovny_vrh;
-    cout << R"(
+    std::cout << R"(
 
 ## Vypocet suradnic telesa za cas (v zakladnych jednotkach) ##
     * Potrebne parametre: pociatocna rychlost (v0), pociatocna vyska (h0), cas (t))"
-         << endl;
-    cout << "Input (pociatocna rychlost v m/s):  ";
-    cin >> Vodorovny_vrh._v0;
-    if (cin.fail()) {
+         << std::endl;
+    std::cout << "Input (pociatocna rychlost v m/s):  ";
+    std::cin >> Vodorovny_vrh._v0;
+    if (std::cin.fail()) {
       throw "Invalid starting speed";
     }
 
-    cout << "Input (pociatocna vyska v m):  ";
-    cin >> Vodorovny_vrh._h;
-    if (cin.fail()) {
+    std::cout << "Input (pociatocna vyska v m):  ";
+    std::cin >> Vodorovny_vrh._h;
+    if (std::cin.fail()) {
       throw "Invalid starting height";
     }
 
-    cout << "Input (cas v sekundach):  ";
-    cin >> Vodorovny_vrh._t;
-    if (cin.fail()) {
+    std::cout << "Input (cas v sekundach):  ";
+    std::cin >> Vodorovny_vrh._t;
+    if (std::cin.fail()) {
       throw "Invalid time";
     }
 
@@ -683,21 +680,21 @@ int vodorovny_vrh(int mode) {
       Vodorovny_vrh._x = Vodorovny_vrh._v0 * sqrt(2 * Vodorovny_vrh._h / Vodorovny_vrh._g);
     }
 
-      cout << "\n   ~ Teleso sa bude nachadzat v suradniciach (" << Vodorovny_vrh._x << " m, " << (Vodorovny_vrh._y > 0 ? Vodorovny_vrh._y : 0) << " m)." << endl;
+      std::cout << "\n   ~ Teleso sa bude nachadzat v suradniciach (" << Vodorovny_vrh._x << " m, " << (Vodorovny_vrh._y > 0 ? Vodorovny_vrh._y : 0) << " m)." << std::endl;
       if (Vodorovny_vrh._y <= 0) {
-      cout << "   ~ Teleso dopadlo na zem "; // (-2.5 sekundy)
+      std::cout << "   ~ Teleso dopadlo na zem "; // (-2.5 sekundy)
 
       float i = 0.0; // pocitadlo sekund
       if (Vodorovny_vrh._y < -1) {
         do { // vypis sekund do padnutia telesa na zem
           Vodorovny_vrh._y = Vodorovny_vrh._h - 0.5 * Vodorovny_vrh._g * pow(i, 2);
           if (Vodorovny_vrh._y <= 0) {
-            cout << "(" << i << " sekundy, na h = 0)";
+            std::cout << "(" << i << " sekundy, na h = 0)";
           }
           i += 0.01;
         } while (Vodorovny_vrh._y >= 0);
       }
-      cout << endl;
+      std::cout << std::endl;
     }
     Sleep_fix(2);
     break;
@@ -706,26 +703,26 @@ int vodorovny_vrh(int mode) {
   case 4: {
     clearScreen();
     Vzorec Vodorovny_vrh;
-    cout << R"(
+    std::cout << R"(
 
 ## Vypocet rychlosti za cas a maximalnej rychlosti ##
     * Potrebne parametre: pociatocna rychlost (v0), pociatocna vyska (h0), cas (t))"
-         << endl;
-    cout << "Input (pociatocna rychlost v m/s):  ";
-    cin >> Vodorovny_vrh._v0;
-    if (cin.fail()) {
+         << std::endl;
+    std::cout << "Input (pociatocna rychlost v m/s):  ";
+    std::cin >> Vodorovny_vrh._v0;
+    if (std::cin.fail()) {
       throw "Invalid starting speed";
     }
 
-    cout << "Input (pociatocna vyska v m):  ";
-    cin >> Vodorovny_vrh._h;
-    if (cin.fail()) {
+    std::cout << "Input (pociatocna vyska v m):  ";
+    std::cin >> Vodorovny_vrh._h;
+    if (std::cin.fail()) {
       throw "Invalid starting height";
     }
 
-    cout << "Input (cas v sekundach):  ";
-    cin >> Vodorovny_vrh._t;
-    if (cin.fail()) {
+    std::cout << "Input (cas v sekundach):  ";
+    std::cin >> Vodorovny_vrh._t;
+    if (std::cin.fail()) {
       throw "Invalid time";
     }
 
@@ -738,12 +735,12 @@ int vodorovny_vrh(int mode) {
     if (Vodorovny_vrh._v > (sqrt(pow(Vodorovny_vrh._v0, 2) + 2*Vodorovny_vrh._g*Vodorovny_vrh._h)) ) {
       Vodorovny_vrh._v = sqrt(pow(Vodorovny_vrh._v0, 2) + 2*Vodorovny_vrh._g*Vodorovny_vrh._h);
 
-      cout << "\n   ~ Teleso dosiahlo maximalnu rychlost " << Vodorovny_vrh._v << " m/s." << endl;
+      std::cout << "\n   ~ Teleso dosiahlo maximalnu rychlost " << Vodorovny_vrh._v << " m/s." << std::endl;
     } else {
-      cout << "\n   ~ Teleso bude mat za cas " << Vodorovny_vrh._t << " sekund, rychlost " << (Vodorovny_vrh._v > 0 ? Vodorovny_vrh._v : 0) << " m/s." << endl;
+      std::cout << "\n   ~ Teleso bude mat za cas " << Vodorovny_vrh._t << " sekund, rychlost " << (Vodorovny_vrh._v > 0 ? Vodorovny_vrh._v : 0) << " m/s." << std::endl;
 
       Vodorovny_vrh._v = sqrt(pow(Vodorovny_vrh._v0, 2) + 2*Vodorovny_vrh._g*Vodorovny_vrh._h);
-      cout << "   ~ Teleso dosiahne maximalnu rychlost " << Vodorovny_vrh._v << " m/s." << endl;
+      std::cout << "   ~ Teleso dosiahne maximalnu rychlost " << Vodorovny_vrh._v << " m/s." << std::endl;
     }
 
     Sleep_fix(2);
@@ -771,7 +768,7 @@ int sikmy_vrh(int mode) {
   // altidude = (pow(v0, 2) * sin(a) * sin(a)) / (2 * g);
 
   clearScreen();
-  cout << R"(
+  std::cout << R"(
 
 ## Sikmy vrh (5) ##
 
@@ -781,28 +778,28 @@ int sikmy_vrh(int mode) {
     4. Domov
 
 0. Konec
-)" << endl;
-  cout << "Input (mode):  ";
-  cin >> mode;
+)" << std::endl;
+  std::cout << "Input (mode):  ";
+  std::cin >> mode;
 
   switch (mode) {
   case 1: {
     clearScreen();
     Vzorec Sikmy_vrh;
-    cout << R"(
+    std::cout << R"(
 
 ## Vypocet dlzky letu v sekundach ##
     * Potrebne parametre: pociatocna rychlost (v0), uhol (a))"
-         << endl;
-    cout << "Input (pociatocna rychlost v m/s):  ";
-    cin >> Sikmy_vrh._v0;
-    if (cin.fail()) {
+         << std::endl;
+    std::cout << "Input (pociatocna rychlost v m/s):  ";
+    std::cin >> Sikmy_vrh._v0;
+    if (std::cin.fail()) {
       throw "Invalid starting speed";
     }
 
-    cout << "Input (uhol v stupnoch):  ";
-    cin >> Sikmy_vrh._a;
-    if (cin.fail()) {
+    std::cout << "Input (uhol v stupnoch):  ";
+    std::cin >> Sikmy_vrh._a;
+    if (std::cin.fail()) {
       throw "Invalid angle";
     }
 
@@ -810,7 +807,7 @@ int sikmy_vrh(int mode) {
 
     Sikmy_vrh._t = (pow(Sikmy_vrh._v0, 2) * sin(Sikmy_vrh._a)) / Sikmy_vrh._g; // dlzka letu v sekundach
 
-    cout << "\n    ~ Teleso bude letiet " << Sikmy_vrh._t << " sekund." << endl;
+    std::cout << "\n    ~ Teleso bude letiet " << Sikmy_vrh._t << " sekund." << std::endl;
 
     Sleep_fix(2);
     break;
@@ -819,21 +816,21 @@ int sikmy_vrh(int mode) {
   case 2: {
     clearScreen();
     Vzorec Sikmy_vrh;
-    cout << R"(
+    std::cout << R"(
 
 ## Vypocet vzdialenosti dopadu telesa na zem ##
     * Potrebne parametre: pociatocna rychlost (v0), uhol (a))"
-         << endl;
+         << std::endl;
 
-    cout << "Input (pociatocna rychlost v m/s):  ";
-    cin >> Sikmy_vrh._v0;
-    if (cin.fail()) {
+    std::cout << "Input (pociatocna rychlost v m/s):  ";
+    std::cin >> Sikmy_vrh._v0;
+    if (std::cin.fail()) {
       throw "Invalid starting speed";
     }
 
-    cout << "Input (uhol v stupnoch):  ";
-    cin >> Sikmy_vrh._a;
-    if (cin.fail()) {
+    std::cout << "Input (uhol v stupnoch):  ";
+    std::cin >> Sikmy_vrh._a;
+    if (std::cin.fail()) {
       throw "Invalid angle";
     }
 
@@ -842,7 +839,7 @@ int sikmy_vrh(int mode) {
     // range = (pow(v0, 2) * sin(a) * cos(a)) / g;
     Sikmy_vrh._s = (pow(Sikmy_vrh._v0, 2) * sin(Sikmy_vrh._a) * cos(Sikmy_vrh._a)) / Sikmy_vrh._g;
 
-    cout << "\n    ~ Teleso dopadne na zem v " << Sikmy_vrh._s << " metroch." << endl;
+    std::cout << "\n    ~ Teleso dopadne na zem v " << Sikmy_vrh._s << " metroch." << std::endl;
 
     Sleep_fix(2);
     break;
@@ -853,21 +850,21 @@ int sikmy_vrh(int mode) {
     clearScreen();
     Vzorec Sikmy_vrh;
     
-    cout << R"(
+    std::cout << R"(
 
 ## Vypocet maximalnej vysky telesa pod uhlom ##
     * Potrebne parametre: pociatocna rychlost (v0), uhol (a))"
-         << endl;
-    cout << "Input (pociatocna rychlost v m/s):  ";
+         << std::endl;
+    std::cout << "Input (pociatocna rychlost v m/s):  ";
 
-    cin >> Sikmy_vrh._v0;
-    if (cin.fail()) {
+    std::cin >> Sikmy_vrh._v0;
+    if (std::cin.fail()) {
       throw "Invalid starting speed";
     }
 
-    cout << "Input (uhol v stupnoch):  ";
-    cin >> Sikmy_vrh._a;
-    if (cin.fail()) {
+    std::cout << "Input (uhol v stupnoch):  ";
+    std::cin >> Sikmy_vrh._a;
+    if (std::cin.fail()) {
       throw "Invalid angle";
     }
 
@@ -876,7 +873,7 @@ int sikmy_vrh(int mode) {
     // altidude = (pow(v0, 2) * sin(a) * sin(a)) / (2 * g);
     Sikmy_vrh._h = (pow(Sikmy_vrh._v0, 2) * sin(Sikmy_vrh._a) * sin(Sikmy_vrh._a)) / (2 * Sikmy_vrh._g);
 
-    cout << "\n    ~ Teleso dosiahne maximalnu vysku " << Sikmy_vrh._h << " metrov." << endl;
+    std::cout << "\n    ~ Teleso dosiahne maximalnu vysku " << Sikmy_vrh._h << " metrov." << std::endl;
 
 
     Sleep_fix(2);
@@ -897,14 +894,14 @@ int sikmy_vrh(int mode) {
 
 void after_challenge(int mode) {
   if (!game_end && mode) {
-    cout << R"(
+    std::cout << R"(
 Prajete si pokracovat vo vypocte? (Y/n))"
-         << endl;
+         << std::endl;
 
     char choice = '\0';
 
-    cout << "Input (choice):  ";
-    cin >> choice;
+    std::cout << "Input (choice):  ";
+    std::cin >> choice;
 
     if (choice == 'n' || choice == 'N') {
       game_end = true;
@@ -922,14 +919,14 @@ void clearScreen() {
 #else
     system("clear 2> /dev/null");
     if(!system("echo $?")){
-      cout << "\033[2J\033[1; 1H";
+      std::cout << "\033[2J\033[1; 1H";
     }
 #endif
 }
 
 void Sleep_fix(size_t time) {
   #ifdef WINDOWS
-    Sleep(time*1000)
+    Sleep(time*1000);
 
   #else
     sleep(time);
@@ -937,4 +934,5 @@ void Sleep_fix(size_t time) {
   #endif
 } // * done
 
-// Test pripojenia githubu
+// Resources to learn C++:
+// https://www.tutorialspoint.com/cplusplus/
