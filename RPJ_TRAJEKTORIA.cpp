@@ -599,7 +599,7 @@ int vodorovny_vrh(int mode) {
   switch (mode) {
   case 1: {
     clearScreen();
-    Vzorec Vodorovny_vrh;
+    Vzorec Vodorovny_vrh; // objekt pre vypocet
     std::cout << R"(
 
 ## Vypocet vzdialenosti dopadu telesa na zem ##
@@ -730,16 +730,16 @@ int vodorovny_vrh(int mode) {
     // ! max v = sqrt(pow(v0, 2) + 2*g*h); // max v = sqrt(v0^2 + 2*g*h)
 
     Vodorovny_vrh._v = sqrt(pow(Vodorovny_vrh._v0, 2) + pow(Vodorovny_vrh._g*Vodorovny_vrh._t, 2));
-    
 
-    if (Vodorovny_vrh._v > (sqrt(pow(Vodorovny_vrh._v0, 2) + 2*Vodorovny_vrh._g*Vodorovny_vrh._h)) ) {
-      Vodorovny_vrh._v = sqrt(pow(Vodorovny_vrh._v0, 2) + 2*Vodorovny_vrh._g*Vodorovny_vrh._h);
+    auto max_v = sqrt(pow(Vodorovny_vrh._v0, 2) + 2 * Vodorovny_vrh._g * Vodorovny_vrh._h);
+    if (Vodorovny_vrh._v > (max_v)) {
+      Vodorovny_vrh._v = max_v;
 
       std::cout << "\n   ~ Teleso dosiahlo maximalnu rychlost " << Vodorovny_vrh._v << " m/s." << std::endl;
     } else {
       std::cout << "\n   ~ Teleso bude mat za cas " << Vodorovny_vrh._t << " sekund, rychlost " << (Vodorovny_vrh._v > 0 ? Vodorovny_vrh._v : 0) << " m/s." << std::endl;
 
-      Vodorovny_vrh._v = sqrt(pow(Vodorovny_vrh._v0, 2) + 2*Vodorovny_vrh._g*Vodorovny_vrh._h);
+      Vodorovny_vrh._v = max_v;
       std::cout << "   ~ Teleso dosiahne maximalnu rychlost " << Vodorovny_vrh._v << " m/s." << std::endl;
     }
 
