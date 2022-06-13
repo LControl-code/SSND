@@ -129,8 +129,8 @@ int mode_selection(int *_mode) {
 Vyberte si prostredie pocitania:
 
     1. Volny pad
-    2. Vrh nadol
-    3. Vrh nahor
+    2. Zvisly vrh nadol
+    3. Zvisly vrh nahor
     4. Vodorovny vrh
     5. Sikmy vrh
 
@@ -274,7 +274,7 @@ int Vodorovny_vrh(int mode) {
   clearScreen();
   std::cout << R"(
 
-## Vrh nadol (2) ##
+## Zvisly vrh nadol (2) ##
 
     1. Vypocet vzdialenosti v case s pociatocnou rychlostou
     2. Vypocet rychlosti za cas s pociatocnou rychlostou
@@ -420,7 +420,7 @@ int vrh_nahor(int mode) {
   
   std::cout << R"(
 
-## Vrh nahor (3) ##
+## Zvisly vrh nahor (3) ##
 
     1. Vypocet vysky za cas s pociatocnou rychlostou
     2. Vypocet rychlosti za cas s pociatocnou rychlostou
