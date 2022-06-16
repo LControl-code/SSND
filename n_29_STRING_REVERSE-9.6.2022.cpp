@@ -1,5 +1,5 @@
-#include <fstream>
 #include <iostream>
+#include <fstream>
 
 #define MAX 100
 using namespace std;
@@ -7,9 +7,7 @@ using namespace std;
 int main() {
 
   fstream file_R("./TXT/TXT-sloh.txt", ios::in);
-  if (!file_R.is_open()) {
-    return 1;
-  }
+  if (!file_R.is_open()) {return 1;}
 
   string sentence[MAX] = {};
   int pocet = 0;
