@@ -43,7 +43,7 @@ int main() {
   file_R.close();
 
   for (int i = 0; i < pocet; i++) {
-    std::cout << first_name[i] << ": " << name_list[i] << std::endl;
+    std::cout << first_name[i] << ": " << name_list[i] << " (pen/s)" << std::endl;
   }
 
   /*
