@@ -21,7 +21,6 @@ int main() {
   */
   while (std::getline(file_R, name[pocet])) {
     for (int i = 0; i < name[pocet].length(); i++) {
-
       if (name[pocet][i] == ' ') {
         break;
       } else {
@@ -35,7 +34,7 @@ int main() {
     if (i == pocet) {
       pocet++;
     } else {
-      first_name[pocet] = {};
+      first_name[pocet] = {}; // vynulovanie stringu, aby sa nespojovali dva zoznamy
     }
 
     name_list[i]++;
@@ -49,25 +48,26 @@ int main() {
   /*
    * UCITELOVA METODA
   */
-  // std::string text;
-  // while (file_R >> name[pocet]) {
-  //   std::getline(file_R, text); 
-  //   int i = 0;
-  //   while (name[i] != name[pocet]) // najde poziciu v poli pre danu meno
-  //     i++;
+  /* std::string text;
+  while (file_R >> name[pocet]) {
+    std::getline(file_R, text); 
+    int i = 0;
+    while (name[i] != name[pocet]) // najde poziciu v poli pre danu meno
+      i++;
 
-  //   if (i == pocet) { // ak nenajde, prida nove meno do pola
-  //     pocet++;
-  //   }
+    name_list[i]++;
+  
+    if (i == pocet) { // ak nenajde, prida nove meno do pola
+      pocet++;
+    }
 
-  //   name_list[i]++;
-  // }
+  }
 
-  // file_R.close();
+  file_R.close();
 
-  // for (int i = 0; i < pocet; i++) { // vypis vsetkych mien
-  //   std::cout << name[i] << ": " << name_list[i] << std::endl;
-  // }
+  for (int i = 0; i < pocet; i++) { // vypis vsetkych mien
+    std::cout << name[i] << ": " << name_list[i] << std::endl;
+   } */
   
 
   return 0;
