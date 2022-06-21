@@ -918,7 +918,7 @@ void clearScreen() {
 
 #else
     system("clear 2> /dev/null");
-    if(!system("echo $?")){
+    if(system("echo $? 1>/dev/null 2>/dev/null") != 0){
       std::cout << "\033[2J\033[1;]";
     }
 #endif
