@@ -6,8 +6,7 @@ int main() {
   double sum_num = 0, sum = 0;
   int count = 0;
 
-  while (cin >>
-         sum_num) { // easy and effective way of getting the desired numbers
+  while (cin >> sum_num && sum_num != 0) { // easy and effective way of getting the desired numbers
     sum += sum_num;
     count++;
   }
