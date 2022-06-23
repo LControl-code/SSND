@@ -1,68 +1,97 @@
-// nacitanie do 3 vektorov
-// najprv dievcata a potom chlapci, podmienka s funkciou pohlavie()
-
 #include <fstream>
-#include <ios>
 #include <iostream>
 #include <string>
 #include <vector>
 using namespace std;
 
-bool Pohlavie();
-string Datum(int n);
+struct Osoba {
+  vector<string> meno;
+  vector<string> rodne_cislo;
+  vector<bool> pohlavie;
+};
+
+bool Pohlavie(string rodne_cislo);
+string Datum(string rodne_cislo);
 
 int main(void) {
   fstream file_R("TXT-vstup-3.txt", ios::in);
   if (!file_R.is_open()) {
     return 1;
   }
-
-  vector<int> rodne_cislo;
-  vector<string> meno;
+  Osoba osoba;
   int i = 0;
 
   while (!file_R.eof()) {
-    int temp_int;
+    string temp_int;
     file_R >> temp_int;
-    rodne_cislo.push_back(temp_int);
+    osoba.rodne_cislo.push_back(temp_int); // vlozim do vektoru rodne_cislo
+    osoba.pohlavie.push_back(
+        Pohlavie(temp_int)); // vrati true/false podla pohlavia
 
     string temp_string;
     getline(file_R, temp_string); // ! zoberie aj medzeru, davaj si na to bacha
-    meno.push_back(temp_string);
-
+    osoba.meno.push_back(temp_string);
     i++;
   } // * nacita potrebne premenne - DONE
 
-  // if dievca -- napise dievca, ak chlapec ide do else, to zistim funkciou
-  // v pohlavie mi spocita aj kolko ich je
-  int pocet = 0;
-  bool once_g = true;
-  bool once_b = true;
+  int pocet[2] = {0, 0};
   for (int j = 0; j < i; j++) {
-    if (Pohlavie()) { // je to dievca
-      if (once_g){
-        cout << "dievcat: " << pocet << endl; // vyries pocet ako premennu ktoru da raz chalanom a raz babam
-        once_g = false;
-      }
-      cout << Datum(j) << meno[j] << endl;
-
-    } else { // je to chlapec
-    if (once_b){
-        cout << "chlapcov: " << pocet << endl;
-        once_b = false;
-      }
-      cout << Datum(j) << meno[j] << endl;
+    if (osoba.pohlavie[j] == true) {
+      pocet[0]++;
+    } else {
+      pocet[1]++;
     }
   }
-  // {
-  //   
-  // }
+
+  cout << "Pocet dievcata: " << pocet[0] << endl;
+  for (int j = 0; j < i; j++) {
+    if (osoba.pohlavie[j] == true) {
+      cout << Datum(osoba.rodne_cislo[j]) << osoba.meno[j] << endl;
+    }
+  }
+
+  cout << endl;
+
+  cout << "Pocet chlapcov: " << pocet[1] << endl;
+  for (int j = 0; j < i; j++) {
+    if (osoba.pohlavie[j] == false) {
+      cout << Datum(osoba.rodne_cislo[j]) << osoba.meno[j] << endl;
+    }
+  }
   return 0;
 
 } // end of main
 
-bool Pohlavie() { return false; }
+bool Pohlavie(string rodne_cislo) {
+  if (stoi(rodne_cislo.substr(2, 2)) > 50) {
+    return true;
 
-string Datum(int n) {
-  return "TEST";
+  } else {
+    return false;
+  }
+}
+
+string Datum(string rodne_cislo) {
+  string datum = "";
+  if (stoi(rodne_cislo.substr(0, 2)) < 22) {
+    datum += "20";
+  } else {
+    datum += "19";
+  }
+  datum += rodne_cislo.substr(0, 2) + "-";
+
+  int n = 0;
+  if (stoi(rodne_cislo.substr(2, 2)) > 50) n = 50;
+
+    if (stoi(rodne_cislo.substr(2, 2)) - n < 10) {
+      datum += "0";
+      datum += to_string(stoi(rodne_cislo.substr(2, 2)) - n) + "-"; // pod 10 muz ci zena
+    } else {
+      datum += to_string(stoi(rodne_cislo.substr(2, 2)) - n) + "-"; // nad 10 muz ci zena
+    }
+  
+    datum += rodne_cislo.substr(4, 2);
+
+
+  return datum;
 }
