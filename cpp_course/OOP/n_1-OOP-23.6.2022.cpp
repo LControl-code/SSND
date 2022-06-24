@@ -74,7 +74,8 @@ class Developer: Employee {
   //     cout << getName() << ", sorry NO promotion for you" << endl;
   //   }
   // }
-  Developer(string name, string company, int age, string favProgrammingLanguage): Employee(name, company, age){
+  Developer(string name, string company, int age, string favProgrammingLanguage)
+    :Employee(name, company, age){
       FavProgrammingLanguage = favProgrammingLanguage; // the other constructor is calling the base class constructor
     }
 
