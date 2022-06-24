@@ -66,7 +66,7 @@ public:
 
 class Developer: Employee {
   public:
-  string FavProgrammingLanguage;
+  string FavProgrammingLanguage; // favorite programming
   // void AskForPromotion() {
   //   if(getAge() >= 30) {
   //     cout << getName() << " got promoted" << endl;
