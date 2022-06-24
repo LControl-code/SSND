@@ -4,7 +4,11 @@ using std::cout;
 using std::endl;
 using std::string;
 
-class Employee {
+class AbstractEmployee {
+  virtual void AskForPromotion()=0; // pure virtual function that is obligatory to be implemented in derived classes
+};
+
+class Employee: AbstractEmployee {
 private:
   string Name;
   string Company;
@@ -49,7 +53,36 @@ public:
     cout << "Age: " << Age << endl;
   }
 
+  void AskForPromotion() {
+    if(Age >= 30) {
+      cout << Name << " got promoted" << endl;
+    } else {
+      cout << Name << ", sorry NO promotion for you" << endl;
+    }
+  }
+
 }; // end of class Employee, now we can use Employee in other files
+
+
+class Developer: Employee {
+  public:
+  string FavProgrammingLanguage;
+  // void AskForPromotion() {
+  //   if(getAge() >= 30) {
+  //     cout << getName() << " got promoted" << endl;
+  //   } else {
+  //     cout << getName() << ", sorry NO promotion for you" << endl;
+  //   }
+  // }
+  Developer(string name, string company, int age, string favProgrammingLanguage): Employee(name, company, age){
+      FavProgrammingLanguage = favProgrammingLanguage; // the other constructor is calling the base class constructor
+    }
+
+
+  void FixBug() {
+    cout << getName() << " fixed bug using " << FavProgrammingLanguage << endl;
+  }
+};
 
 int main() {
   Employee employee1("John", "Google", 30);
@@ -60,6 +93,7 @@ int main() {
   employee1.setAge(13); // this will not work because of the if statement in setAge
   employee1.IntroduceYourself();
   employee1.Print();
+  employee1.AskForPromotion();
 
   Employee employee2  ("Saldina", "YT-CodeBeaty", 25);
   // employee2.Name = "Saldina";
@@ -67,8 +101,16 @@ int main() {
   // employee2.Age = 25; 
   employee2.IntroduceYourself();
   employee2.Print();
+  employee2.AskForPromotion();
 
   Employee employee3 = Employee("Jonas", "Facebook", 65);
   employee3.Print();
+  employee3.AskForPromotion();
+
+
+
+
+  Developer developer1("Maria", "Google", 30, "C++");
+  developer1.FixBug();
   return 0;
 } // ended 43:50 out of 1:30:25
