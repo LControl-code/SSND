@@ -21,14 +21,13 @@ int main(void) {
   Osoba osoba;
   int i = 0;
 
-  while (!file_R.eof()) {
+  while(!file_R.eof())  {
     string temp_int;
     file_R >> temp_int;
     osoba.rodne_cislo.push_back(temp_int); // vlozim do vektoru rodne_cislo
-    osoba.pohlavie.push_back(
-        Pohlavie(temp_int)); // vrati true/false podla pohlavia
+    osoba.pohlavie.push_back(Pohlavie(temp_int)); // vrati true/false podla pohlavia
 
-    string temp_string;
+    string temp_string;;
     getline(file_R, temp_string); // ! zoberie aj medzeru, davaj si na to bacha
     osoba.meno.push_back(temp_string);
     i++;
