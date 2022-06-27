@@ -21,10 +21,10 @@ public:
     Age = age;
   }
 
-  void setName(string name) {
+  void setName(string name) { // setter
     Name = name;
   }
-  string getName(){
+  string getName(){ // getter
     return Name;
   }
 
