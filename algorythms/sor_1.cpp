@@ -17,6 +17,8 @@ int main() {
     arr[i] = rand() % 10;
   }
 
+  
+
   // outputting the unsorted array
   cout << "\nUnsorted array: ";
   for (int i = 0; i < n; i++) {
