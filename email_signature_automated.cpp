@@ -250,7 +250,7 @@ string lowercase_name() {
 string uppercase_role() {
 
   string up_role = role;
-  for (int i = 0; i < role.length(); i++) {
+  for (long unsigned int i = 0; i < role.length(); i++) {
     up_role[i] = (char)toupper(role[i]);
   }
 
