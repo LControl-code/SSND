@@ -13,9 +13,10 @@ int main() {
     i_rand_number =
         min + rand() % (max - min +
                         1); // works, je to dobry vzorec, nie ako ten na hodine
-    cout << i_rand_number << ' ';
+    std::cout << i_rand_number << ' ';
   }
 
+  std::cout << i_rand_number << '\n';
   std::cout << i_rand_number << '\n';
   return EXIT_SUCCESS;
 }
