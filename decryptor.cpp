@@ -22,7 +22,7 @@ int main()
 
     cout << "Zadajte vaše zabezpečené heslo: ";
     cin >> string_encrypted;
-    string str_encrypted[string_encrypted.length() / 4] = {};
+    string str_encrypted[string_encrypted.length() / 4];
     system("clear");
     for (int i = 0; i < string_encrypted.length(); i += 4)
     {
