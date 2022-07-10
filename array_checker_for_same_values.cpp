@@ -39,5 +39,5 @@ int main(){
   int N = 5;
   Solution ob;
   cout << ob.check(A, B, N);
-
+  
 }
