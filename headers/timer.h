@@ -1,6 +1,5 @@
-// #include "/home/lcontrol/git-sync/SSND/headers/timer.h"
-#include <iostream>
 #include <chrono>
+#include <iostream>
 
 /* 
   * The chrono library provides a high-resolution clock.
@@ -15,48 +14,28 @@
   5. Print the difference.
 */
 
+namespace timer {
 struct Timer {
   std::chrono::_V2::system_clock::time_point start, endl;
   std::chrono::duration<float> duration;
 
   Timer() {
     // Get the current timepoint
-      start = std::chrono::high_resolution_clock::now();
-
+    start = std::chrono::high_resolution_clock::now();
   }
 
   ~Timer() {
     // Get the current timepoint again for the end
-      endl = std::chrono::high_resolution_clock::now();
+    endl = std::chrono::high_resolution_clock::now();
 
     // Calculate the difference between the two timepoints
-      duration = endl - start;
+    duration = endl - start;
 
     // Calculate the duration in milliseconds
-      float ms = duration.count() * 1000.0f;
+    float ms = duration.count() * 1000.0f;
 
     // Print the difference
-      std::cout << "Timer took " << ms << " ms" << std::endl;
+    std::cout << "Timer took " << ms << " ms" << std::endl;
   }
 };
-
-void Function() {
-
-  // Create a timer with the default constructor
-    Timer timer;
-
-
-  // Do something
-    for (int i = 0; i < 100; i++)
-      std::cout << "Hello World!\n";
-
-
-  // This will print the time it took to run the function
-}
-
-int main() {
-
-  Function();
-
-  return 0;
-}
+} // namespace timer
